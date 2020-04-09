@@ -1,11 +1,3 @@
-# eclipse
-bin
-*.launch
-.settings
-.metadata
-.classpath
-.project
-
 # idea
 out
 *.ipr
@@ -13,10 +5,5 @@ out
 *.iml
 .idea
 
-# gradle
-build
-.gradle
-
 # other
-eclipse
 run
