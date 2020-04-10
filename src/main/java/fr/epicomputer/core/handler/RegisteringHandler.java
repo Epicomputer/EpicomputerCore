@@ -18,7 +18,7 @@ public class RegisteringHandler {
 	@SubscribeEvent
     public void registerItems(RegistryEvent.Register<Item> event) {
 		
-		event.getRegistry().registerAll(ItemsCore.BIOS, ItemsCore.COMPUTER_CASE);
+		event.getRegistry().registerAll(ItemsCore.BIOS, ItemsCore.COMPUTER_CASE, ItemsCore.PROCESSOR, ItemsCore.RAM, ItemsCore.CARDGRAPHICS, ItemsCore.HARDDISK);
         
     }
 }

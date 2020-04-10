@@ -4,7 +4,10 @@ package fr.epicomputer.core;
 import org.apache.logging.log4j.Logger;
 
 import fr.epicomputer.core.handler.RegisteringHandler;
+import fr.epicomputer.core.init.ItemsCore;
 import fr.epicomputer.core.proxy.CommonProxy;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -13,6 +16,8 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 @Mod(modid = EpicomputerCore.MODID, name = EpicomputerCore.NAME, version = EpicomputerCore.VERSION)
 public class EpicomputerCore {
@@ -22,13 +27,23 @@ public class EpicomputerCore {
 	public static final String VERSION = "0.0.1";
 	public static final String MINECRAFT_VERSION = "1.12.2";
 	
+	
     @Instance(EpicomputerCore.MODID)
    public static EpicomputerCore instance;
 
     @SidedProxy(clientSide = "fr.epicomputer.core.proxy.ClientProxy", serverSide = "fr.epicomputer.core.proxy.ClientProxy")
     public static CommonProxy proxy;
 
-	
+    public static CreativeTabs tabsCore = new CreativeTabs("epicomputercore_creative_tabs")
+    {
+        @Override
+        public ItemStack getTabIconItem()
+        {
+            return new ItemStack(ItemsCore.BIOS);
+        }
+     
+       
+    };
 
     public static Logger logger;
     

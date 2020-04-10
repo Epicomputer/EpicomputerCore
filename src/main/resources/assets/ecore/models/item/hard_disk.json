@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "ecore:items/item_test"
+        "layer0": "ecore:items/hard_disk"
     }
 }
