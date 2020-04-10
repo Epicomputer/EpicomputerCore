@@ -1,7 +1,7 @@
 package fr.epicomputer.core.init;
 
 import fr.epicomputer.core.EpicomputerCore;
-import fr.epicomputer.core.items.ItemTest;
+import fr.epicomputer.core.items.Bios;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -16,9 +16,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemsCore
 {
 	//creer un item ici
-    public static final Item ITEMTEST = new ItemTest();
+    public static final Item BIOS = new Bios();
     //block item
-    public static final Item TESTBLOCK_ITEM = new ItemBlock(BlocksCore.TESTBLOCK).setRegistryName(BlocksCore.TESTBLOCK.getRegistryName());
+    public static final Item COMPUTER_CASE = new ItemBlock(BlocksCore.COMPUTER_CASE).setRegistryName(BlocksCore.COMPUTER_CASE.getRegistryName());
  
     public static void setItemName(Item item, String name)
     {
@@ -32,9 +32,9 @@ public class ItemsCore
     public static void registerItemsModels(ModelRegistryEvent event)
     {
     	//registre ton model
-    	registerModel(ITEMTEST, 0);
+    	registerModel(BIOS, 0);
     	//block item
-    	registerModel(TESTBLOCK_ITEM, 0);
+    	registerModel(COMPUTER_CASE, 0);
     }
  
     @SideOnly(Side.CLIENT)

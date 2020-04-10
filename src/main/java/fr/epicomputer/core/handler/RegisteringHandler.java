@@ -12,13 +12,13 @@ public class RegisteringHandler {
 	@SubscribeEvent
 	public void registerBlocks(RegistryEvent.Register<Block> event)
 	{
-	    event.getRegistry().registerAll(BlocksCore.TESTBLOCK);
+	    event.getRegistry().registerAll(BlocksCore.COMPUTER_CASE);
 	}
 	
 	@SubscribeEvent
     public void registerItems(RegistryEvent.Register<Item> event) {
 		
-		event.getRegistry().registerAll(ItemsCore.ITEMTEST, ItemsCore.TESTBLOCK_ITEM);
+		event.getRegistry().registerAll(ItemsCore.BIOS, ItemsCore.COMPUTER_CASE);
         
     }
 }
