@@ -8,7 +8,7 @@ bin
 
 # idea
 out
-*.ip
+*.ipr
 *.iws
 *.iml
 .idea
