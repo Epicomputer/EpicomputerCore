@@ -1,5 +1,22 @@
+# eclipse
+bin
+*.launch
+.settings
+.metadata
+.classpath
+.project
 
-CREDITS.txt
-*.txt
-*.jar
-gradle/wrapper/gradle-wrapper.jar
+# idea
+out
+*.ipr
+*.iws
+*.iml
+.idea
+
+# gradle
+build
+.gradle
+
+# other
+eclipse
+run
