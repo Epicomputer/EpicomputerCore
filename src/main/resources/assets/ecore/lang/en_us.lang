@@ -1,8 +1,11 @@
+itemGroup.epicomputercore_creative_tabs=EpicomputerCore
+
 item.ecore.bios.name=Bios
 item.ecore.ram.name=Ram
 item.ecore.processor.name=Processor
 item.ecore.graphic_card.name=Graphic Card
 item.ecore.hard_disk.name=Hard Disk
+item.ecore.tablet_of_help.name=Tablet Of Help
+
 tile.ecore.computer_case.name=Computer Case
-itemGroup.epicomputercore_creative_tabs=EpicomputerCore
 tile.computer_case=Computer

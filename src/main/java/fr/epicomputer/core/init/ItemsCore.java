@@ -6,6 +6,7 @@ import fr.epicomputer.core.items.CardGraphics;
 import fr.epicomputer.core.items.HardDisk;
 import fr.epicomputer.core.items.Processor;
 import fr.epicomputer.core.items.Ram;
+import fr.epicomputer.core.items.TabletOfHelp;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -25,6 +26,8 @@ public class ItemsCore
     public static final Item RAM = new Ram();
     public static final Item CARDGRAPHICS = new CardGraphics();
     public static final Item HARDDISK = new HardDisk();
+    public static final Item TABLETOFHELP = new TabletOfHelp();
+    
     //block item
     public static final Item COMPUTER_CASE = new ItemBlock(BlocksCore.COMPUTER_CASE).setRegistryName(BlocksCore.COMPUTER_CASE.getRegistryName());
  
@@ -45,6 +48,7 @@ public class ItemsCore
     	registerModel(RAM, 0);
     	registerModel(CARDGRAPHICS, 0);
     	registerModel(HARDDISK, 0);
+    	registerModel(TABLETOFHELP, 0);
     	//block item
     	registerModel(COMPUTER_CASE, 0);
     }
