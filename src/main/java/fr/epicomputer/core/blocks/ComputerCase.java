@@ -1,9 +1,9 @@
 package fr.epicomputer.core.blocks;
 
+import fr.epicomputer.core.EpicomputerCore;
 import fr.epicomputer.core.init.BlocksCore;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.creativetab.CreativeTabs;
 
 public class ComputerCase extends Block {
 	
@@ -15,7 +15,7 @@ public class ComputerCase extends Block {
 		 BlocksCore.setBlockName(this, NAME);
 		 setResistance(5.0F);
 		 setHardness(3.0F);
-		 setCreativeTab(CreativeTabs.BUILDING_BLOCKS);
+		 setCreativeTab(EpicomputerCore.tabsCore);
 	}
 
 	

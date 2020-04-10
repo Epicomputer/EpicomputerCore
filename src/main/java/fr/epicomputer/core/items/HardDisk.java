@@ -4,11 +4,11 @@ import fr.epicomputer.core.EpicomputerCore;
 import fr.epicomputer.core.init.ItemsCore;
 import net.minecraft.item.Item;
 
-public class Bios extends Item {
+public class HardDisk extends Item {
 	
-	public static final String NAME = "bios";
+	public static final String NAME = "hard_disk";
 	
-    public Bios()
+    public HardDisk()
     {
         super();
         ItemsCore.setItemName(this, NAME);

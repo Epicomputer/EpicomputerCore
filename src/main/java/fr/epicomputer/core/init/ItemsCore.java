@@ -2,6 +2,10 @@ package fr.epicomputer.core.init;
 
 import fr.epicomputer.core.EpicomputerCore;
 import fr.epicomputer.core.items.Bios;
+import fr.epicomputer.core.items.CardGraphics;
+import fr.epicomputer.core.items.HardDisk;
+import fr.epicomputer.core.items.Processor;
+import fr.epicomputer.core.items.Ram;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -17,6 +21,10 @@ public class ItemsCore
 {
 	//creer un item ici
     public static final Item BIOS = new Bios();
+    public static final Item PROCESSOR = new Processor();
+    public static final Item RAM = new Ram();
+    public static final Item CARDGRAPHICS = new CardGraphics();
+    public static final Item HARDDISK = new HardDisk();
     //block item
     public static final Item COMPUTER_CASE = new ItemBlock(BlocksCore.COMPUTER_CASE).setRegistryName(BlocksCore.COMPUTER_CASE.getRegistryName());
  
@@ -33,6 +41,10 @@ public class ItemsCore
     {
     	//registre ton model
     	registerModel(BIOS, 0);
+    	registerModel(PROCESSOR, 0);
+    	registerModel(RAM, 0);
+    	registerModel(CARDGRAPHICS, 0);
+    	registerModel(HARDDISK, 0);
     	//block item
     	registerModel(COMPUTER_CASE, 0);
     }

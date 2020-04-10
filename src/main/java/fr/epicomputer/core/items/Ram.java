@@ -4,11 +4,11 @@ import fr.epicomputer.core.EpicomputerCore;
 import fr.epicomputer.core.init.ItemsCore;
 import net.minecraft.item.Item;
 
-public class Bios extends Item {
+public class Ram extends Item {
 	
-	public static final String NAME = "bios";
+	public static final String NAME = "ram";
 	
-    public Bios()
+    public Ram()
     {
         super();
         ItemsCore.setItemName(this, NAME);
