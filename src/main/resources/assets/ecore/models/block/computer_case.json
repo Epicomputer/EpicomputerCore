@@ -3,6 +3,7 @@
     "textures": {
         "top": "ecore:blocks/computer_case_side",
         "front": "ecore:blocks/computer_case_front",
-        "side": "ecore:blocks/computer_case_side"
+        "side": "ecore:blocks/computer_case_side",
+        "back": "ecore:blocks/computer_case_back"
     }
 }
