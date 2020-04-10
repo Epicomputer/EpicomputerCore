@@ -3,9 +3,14 @@ package fr.epicomputer.core;
 
 import org.apache.logging.log4j.Logger;
 
+import fr.epicomputer.core.blocks.ComputerCase;
+import fr.epicomputer.core.handler.GuiHandler;
 import fr.epicomputer.core.handler.RegisteringHandler;
 import fr.epicomputer.core.init.ItemsCore;
 import fr.epicomputer.core.proxy.CommonProxy;
+import fr.epicomputer.core.tiles.TileEntityComputerCase;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -16,8 +21,8 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 @Mod(modid = EpicomputerCore.MODID, name = EpicomputerCore.NAME, version = EpicomputerCore.VERSION)
 public class EpicomputerCore {
@@ -56,7 +61,8 @@ public class EpicomputerCore {
     {
         logger = event.getModLog();
         proxy.preInit(event.getSuggestedConfigurationFile());
-        
+        GameRegistry.registerTileEntity(TileEntityComputerCase.class, EpicomputerCore.MODID +":tile_computer_case");
+        NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
     }
  
     @EventHandler

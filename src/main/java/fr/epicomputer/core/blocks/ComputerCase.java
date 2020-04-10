@@ -2,7 +2,8 @@ package fr.epicomputer.core.blocks;
 
 import fr.epicomputer.core.EpicomputerCore;
 import fr.epicomputer.core.init.BlocksCore;
-import net.minecraft.block.Block;
+import fr.epicomputer.core.tiles.TileEntityComputerCase;
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -10,15 +11,19 @@ import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class ComputerCase extends Block {
+public class ComputerCase extends BlockContainer {
 	
 	public static final String NAME = "computer_case";
 	public static final PropertyDirection FACING = BlockHorizontal.FACING;
@@ -81,7 +86,57 @@ public class ComputerCase extends Block {
             worldIn.setBlockState(pos, state.withProperty(FACING, enumfacing), 2);
         }
     }
+    
+    @Override
+    public boolean hasTileEntity() {
+        return true;
+    }
+     
+    @Override
+    public TileEntity createNewTileEntity(World world, int metadata)  {
+        return new TileEntityComputerCase();
+    }
+    @Override
+    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+        TileEntity tileentity = worldIn.getTileEntity(pos);
+     
+        if (tileentity instanceof TileEntityComputerCase) {
+            InventoryHelper.dropInventoryItems(worldIn, pos,
+                    (TileEntityComputerCase) tileentity);
+        }
+     
+        super.breakBlock(worldIn, pos, state);
+    }
+    
+    @Override
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        if (world.isRemote) {
+            return true;
+        } else {
+            TileEntity tileentity = world.getTileEntity(pos);
+     
+            if (tileentity instanceof TileEntityComputerCase) {
+                player.openGui(EpicomputerCore.instance, 0, world, pos.getX(),
+                        pos.getY(), pos.getZ());
+            }
+     
+            return true;
+        }
+    }
   
+    @Override
+    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+    	worldIn.setBlockState(pos, state.withProperty(FACING, placer.getHorizontalFacing().getOpposite()), 2);
+    	if (stack.hasDisplayName()) {
+            TileEntity tileentity = worldIn.getTileEntity(pos);
+     
+            if (tileentity instanceof TileEntityComputerCase) {
+                ((TileEntityComputerCase) tileentity).setCustomName(stack
+                        .getDisplayName());
+            }
+        }
+    }
+    
     public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
     {
         return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
@@ -133,10 +188,7 @@ public class ComputerCase extends Block {
         return new BlockStateContainer(this, new IProperty[] {FACING});
     }
   
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
-    {
-        worldIn.setBlockState(pos, state.withProperty(FACING, placer.getHorizontalFacing().getOpposite()), 2);
-    }
+    
   
 	
 
