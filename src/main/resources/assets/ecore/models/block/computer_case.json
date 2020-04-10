@@ -1,9 +1,9 @@
 {
     "parent": "block/orientable",
     "textures": {
-        "top": "blocks/computer_case_side",
-        "front": "blocks/computer_case_front",
-        "side": "blocks/computer_case_side",
-        "back": "blocks/computer_case_back",
+        "top": "ecore:blocks/computer_case_side",
+        "front": "ecore:blocks/computer_case_front",
+        "side": "ecore:blocks/computer_case_side",
+        "back": "ecore:blocks/computer_case_back"
     }
 }
