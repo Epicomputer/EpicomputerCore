@@ -14,11 +14,13 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
-@Mod(modid = EpicomputerCore.MODID, name = EpicomputerCore.NAME, version = "1.0.0")
+@Mod(modid = EpicomputerCore.MODID, name = EpicomputerCore.NAME, version = EpicomputerCore.VERSION)
 public class EpicomputerCore {
 	
 	public static final String MODID = "ecore";
 	public static final String NAME = "Epicomputer Core";
+	public static final String VERSION = "0.0.1";
+	public static final String MINECRAFT_VERSION = "1.12.2";
 	
     @Instance(EpicomputerCore.MODID)
    public static EpicomputerCore instance;

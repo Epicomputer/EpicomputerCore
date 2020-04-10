@@ -4,6 +4,7 @@ import fr.epicomputer.core.EpicomputerCore;
 import fr.epicomputer.core.items.ItemTest;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -14,7 +15,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @EventBusSubscriber(value = Side.CLIENT, modid = EpicomputerCore.MODID) // En 1.12+
 public class ItemsCore
 {
-    public static final Item TUTORIAL = new ItemTest();
+	//creer un item ici
+    public static final Item ITEMTEST = new ItemTest();
+    //block item
+    public static final Item TESTBLOCK_ITEM = new ItemBlock(BlocksCore.TESTBLOCK).setRegistryName(BlocksCore.TESTBLOCK.getRegistryName());
  
     public static void setItemName(Item item, String name)
     {
@@ -27,8 +31,10 @@ public class ItemsCore
     @SubscribeEvent
     public static void registerItemsModels(ModelRegistryEvent event)
     {
-    registerModel(TUTORIAL, 0);
-        //registerModel(BLOCK_TUTORIAL_ITEM, 0);
+    	//registre ton model
+    	registerModel(ITEMTEST, 0);
+    	//block item
+    	registerModel(TESTBLOCK_ITEM, 0);
     }
  
     @SideOnly(Side.CLIENT)
