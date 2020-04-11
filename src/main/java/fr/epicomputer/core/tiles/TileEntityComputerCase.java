@@ -15,7 +15,7 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public class TileEntityComputerCase extends TileEntityLockable implements ITickable {
 	
-	private NonNullList<ItemStack> stacks = NonNullList.withSize(5, ItemStack.EMPTY);
+	private NonNullList<ItemStack> stacks = NonNullList.withSize(6, ItemStack.EMPTY);
 	private String customName;
 	private int	timePassed = 0;
 	private int	burningTimeLeft	= 0;

@@ -1,5 +1,6 @@
 package fr.epicomputer.core.container;
 
+import fr.epicomputer.core.init.ItemsCore;
 import fr.epicomputer.core.tiles.TileEntityComputerCase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -22,16 +23,16 @@ public class ComputerCaseContainer extends Container{
 
 	public ComputerCaseContainer(TileEntityComputerCase tile, InventoryPlayer playerInventory) {
 	    this.tile = tile;
+	 this.addSlotToContainer(new SlotSingleItem(tile, 1, 15, 35,ItemsCore.BIOS ));
+	 this.addSlotToContainer(new SlotSingleItem(tile, 2, 73, 15,ItemsCore.PROCESSOR ));
+	 this.addSlotToContainer(new SlotSingleItem(tile, 3, 98, 15,ItemsCore.RAM ));
+	 this.addSlotToContainer(new SlotSingleItem(tile, 4, 123, 15,ItemsCore.CARDGRAPHICS ));
+	 this.addSlotToContainer(new SlotSingleItem(tile, 5, 147, 15,ItemsCore.HARDDISK ));
 	 
-	    int i;
-	    for(i = 0; i < 2; i++) {
-	        this.addSlotToContainer(new Slot(tile, i, 33 + i * 18, 7));
-	    }
-	    for(i = 0; i < 2; i++) {
-	        this.addSlotToContainer(new SlotSingleItem(tile, i + 2, 42, 40 + i * 18, i == 0 ? Item.getItemFromBlock(Blocks.PLANKS) : Items.WHEAT));
-	    }
-	    this.addSlotToContainer(new SlotOutput(tile, 4, 116, 17));
-	 
+	 //this.addSlotToContainer(new SlotOutput(tile, 4, 116, 17));
+	    
+	 //inventory
+	 int i;
 	    for(i = 0; i < 3; ++i) {
 	        for(int j = 0; j < 9; ++j) {
 	            this.addSlotToContainer(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));

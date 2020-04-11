@@ -39,7 +39,7 @@ public class GuiContenairComputerCase extends GuiContainer{
 	        this.drawTexturedModalRect(i + 37, j + 26 + 12 - textureHeight,
 	                177, 12 - textureHeight, 27, textureHeight);
 	    }
-	    this.buttonList.add(new GuiButtonPowerComputer(0, this.width / 2 - 124, j + 72 + 12));
+	    this.buttonList.add(new GuiButtonPowerComputer(0, this.width / 2 - 50, j + 30 ));
 
 	    this.fontRenderer.drawString(this.tile.getName(), i + 80, j + 45, 0xFFFFFF);
 	}
