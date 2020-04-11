@@ -3,7 +3,9 @@ package fr.epicomputer.core.gui;
 import fr.epicomputer.core.EpicomputerCore;
 import fr.epicomputer.core.container.ComputerCaseContainer;
 import fr.epicomputer.core.tiles.TileEntityComputerCase;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 
@@ -16,6 +18,7 @@ public class GuiContenairComputerCase extends GuiContainer{
         super(new ComputerCaseContainer(tile, playerInv));
         this.tile = tile;
 	}
+	
 	
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
@@ -38,6 +41,12 @@ public class GuiContenairComputerCase extends GuiContainer{
 	 
 	    this.fontRenderer.drawString(this.tile.getName(), i + 80, j + 45, 0xFFFFFF);
 	}
-
+@Override
+	public void initGui() {
+		
+		  int j = this.height / 4 + 48;
+		//this.buttonList.add(new GuiButtonPowerComputer(0, this.width / 2 - 100, j + 72 + 12, 98, 20, I18n.format("menu.options")));
+        
+	}
 
 }
