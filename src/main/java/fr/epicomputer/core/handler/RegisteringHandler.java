@@ -12,7 +12,12 @@ public class RegisteringHandler {
 	@SubscribeEvent
 	public void registerBlocks(RegistryEvent.Register<Block> event)
 	{
-	    event.getRegistry().registerAll(BlocksCore.COMPUTER_CASE);
+	    event.getRegistry().registerAll(
+	    		BlocksCore.COMPUTER_CASE,
+	    		BlocksCore.COMPUTER_CASE_ON,
+	    		BlocksCore.COMPUTER_CASE_BOOT,
+	    		BlocksCore.COMPUTER_CASE_ERROR
+	    		);
 	}
 	
 	@SubscribeEvent
@@ -25,7 +30,10 @@ public class RegisteringHandler {
 			ItemsCore.RAM, 
 			ItemsCore.CARDGRAPHICS, 
 			ItemsCore.HARDDISK,
-			ItemsCore.TABLETOFHELP
+			ItemsCore.TABLETOFHELP,
+			ItemsCore.COMPUTER_CASE_ON,
+			ItemsCore.COMPUTER_CASE_BOOT,
+			ItemsCore.COMPUTER_CASE_ERROR
 		);
         
     }

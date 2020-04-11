@@ -1,0 +1,11 @@
+{
+    "variants": {
+        "normal": [
+            { "model": "ecore:computer_case_boot" }
+        ],
+        "facing=north": { "model": "ecore:computer_case_boot" },
+        "facing=south": { "model": "ecore:computer_case_boot", "y": 180 },
+        "facing=west":  { "model": "ecore:computer_case_boot", "y": 270 },
+        "facing=east":  { "model": "ecore:computer_case_boot", "y": 90 }
+    }
+}
