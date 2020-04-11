@@ -30,10 +30,7 @@ public class RegisteringHandler {
 			ItemsCore.RAM, 
 			ItemsCore.CARDGRAPHICS, 
 			ItemsCore.HARDDISK,
-			ItemsCore.TABLETOFHELP,
-			ItemsCore.COMPUTER_CASE_ON,
-			ItemsCore.COMPUTER_CASE_BOOT,
-			ItemsCore.COMPUTER_CASE_ERROR
+			ItemsCore.TABLETOFHELP
 		);
         
     }

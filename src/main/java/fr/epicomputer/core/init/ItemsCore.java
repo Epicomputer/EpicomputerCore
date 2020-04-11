@@ -30,9 +30,9 @@ public class ItemsCore
     
     //block item
     public static final Item COMPUTER_CASE = new ItemBlock(BlocksCore.COMPUTER_CASE).setRegistryName(BlocksCore.COMPUTER_CASE.getRegistryName());
-    public static final Item COMPUTER_CASE_BOOT = new ItemBlock(BlocksCore.COMPUTER_CASE_BOOT).setRegistryName(BlocksCore.COMPUTER_CASE_BOOT.getRegistryName());
-    public static final Item COMPUTER_CASE_ERROR = new ItemBlock(BlocksCore.COMPUTER_CASE_ERROR).setRegistryName(BlocksCore.COMPUTER_CASE_ERROR.getRegistryName());
-    public static final Item COMPUTER_CASE_ON = new ItemBlock(BlocksCore.COMPUTER_CASE_ON).setRegistryName(BlocksCore.COMPUTER_CASE_ON.getRegistryName());
+    //public static final Item COMPUTER_CASE_BOOT = new ItemBlock(BlocksCore.COMPUTER_CASE_BOOT).setRegistryName(BlocksCore.COMPUTER_CASE_BOOT.getRegistryName());
+    //public static final Item COMPUTER_CASE_ERROR = new ItemBlock(BlocksCore.COMPUTER_CASE_ERROR).setRegistryName(BlocksCore.COMPUTER_CASE_ERROR.getRegistryName());
+    //public static final Item COMPUTER_CASE_ON = new ItemBlock(BlocksCore.COMPUTER_CASE_ON).setRegistryName(BlocksCore.COMPUTER_CASE_ON.getRegistryName());
     
     public static void setItemName(Item item, String name)
     {
