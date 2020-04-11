@@ -2,7 +2,7 @@
     "parent": "block/orientable",
     "textures": {
         "top": "ecore:blocks/computer_case_side",
-        "front": "ecore:blocks/computer_case_front",
+        "front": "ecore:blocks/computer_case_front_error",
         "side": "ecore:blocks/computer_case_side"
     }
 }

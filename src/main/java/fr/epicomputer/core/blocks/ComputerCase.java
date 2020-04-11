@@ -12,6 +12,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -23,13 +24,36 @@ import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+
 public class ComputerCase extends BlockContainer {
 	
-	public static final String NAME = "computer_case";
-	public static final PropertyDirection FACING = BlockHorizontal.FACING;
+	public enum ComputerState{
+		
+		ERROR,
+		BOOT,
+		ON,
+		OFF
+		
+	}
 	
-	public ComputerCase(Material materialIn) {
+	public static String NAME = null;
+	public static final PropertyDirection FACING = BlockHorizontal.FACING;
+	public static ComputerState state;
+	
+	public ComputerCase(Material materialIn, ComputerState state) {
 		 super(materialIn);
+		 
+		 this.state = state;
+		 
+		 if (state == ComputerState.ERROR) {
+			NAME = "computer_case_error";
+		 }else if(state == ComputerState.ON) {
+			 NAME = "computer_case_on";
+		 }else if(state == ComputerState.BOOT) {
+			 NAME = "computer_case_boot";
+		 }else {
+			 NAME = "computer_case";
+		 }
 		 
 		 BlocksCore.setBlockName(this, NAME);
 		 setResistance(5.0F);
@@ -38,10 +62,6 @@ public class ComputerCase extends BlockContainer {
 		 setHardness(3.0F);
 		 setCreativeTab(EpicomputerCore.tabsCore);
 	}
-
-	
-	
-    
     
     public EnumBlockRenderType getRenderType(IBlockState state)
     {
@@ -188,7 +208,38 @@ public class ComputerCase extends BlockContainer {
         return new BlockStateContainer(this, new IProperty[] {FACING});
     }
   
-    
+    public static void setState(ComputerState state, World worldIn, BlockPos pos)
+    {
+        IBlockState iblockstate = worldIn.getBlockState(pos);
+        TileEntity tileentity = worldIn.getTileEntity(pos);
+
+        if (state == ComputerState.ON)
+        {
+            worldIn.setBlockState(pos, BlocksCore.COMPUTER_CASE_ON.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
+            worldIn.setBlockState(pos, BlocksCore.COMPUTER_CASE_ON.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
+        }
+        else if (state == ComputerState.BOOT)
+        {
+            worldIn.setBlockState(pos, BlocksCore.COMPUTER_CASE_BOOT.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
+            worldIn.setBlockState(pos, BlocksCore.COMPUTER_CASE_BOOT.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
+        }
+        else if (state == ComputerState.ERROR)
+        {
+            worldIn.setBlockState(pos, BlocksCore.COMPUTER_CASE_ERROR.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
+            worldIn.setBlockState(pos, BlocksCore.COMPUTER_CASE_ERROR.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
+        }
+        else
+        {
+            worldIn.setBlockState(pos, BlocksCore.COMPUTER_CASE.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
+            worldIn.setBlockState(pos, BlocksCore.COMPUTER_CASE.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
+        }
+
+        if (tileentity != null)
+        {
+            tileentity.validate();
+            worldIn.setTileEntity(pos, tileentity);
+        }
+    }
   
 	
 

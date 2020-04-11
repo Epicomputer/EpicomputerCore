@@ -1,12 +1,11 @@
 package fr.epicomputer.core.gui;
 
-import java.io.IOException;
-
 import fr.epicomputer.core.EpicomputerCore;
 import fr.epicomputer.core.container.ComputerCaseContainer;
 import fr.epicomputer.core.tiles.TileEntityComputerCase;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 
@@ -39,18 +38,17 @@ public class GuiContenairComputerCase extends GuiContainer{
 	        this.drawTexturedModalRect(i + 37, j + 26 + 12 - textureHeight,
 	                177, 12 - textureHeight, 27, textureHeight);
 	    }
+
 	    this.buttonList.add(new GuiButtonPowerComputer(0, this.width / 2 - 50, j + 30 ));
 
 	    this.fontRenderer.drawString(this.tile.getName(), i + 80, j + 45, 0xFFFFFF);
 	}
-	
-	protected void actionPerformed(GuiButton button) throws IOException
-    {
-        if (button.id == 0)
-        {
-            
-        }
+@Override
+	public void initGui() {
+		
+		  int j = this.height / 4 + 48;
+		//this.buttonList.add(new GuiButtonPowerComputer(0, this.width / 2 - 100, j + 72 + 12, 98, 20, I18n.format("menu.options")));
+        
 	}
-	
 
 }
