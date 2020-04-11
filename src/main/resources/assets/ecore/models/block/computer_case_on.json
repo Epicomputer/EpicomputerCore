@@ -1,8 +1,0 @@
-{
-    "parent": "block/orientable",
-    "textures": {
-        "top": "ecore:blocks/computer_case_side",
-        "front": "ecore:blocks/computer_case_front_on",
-        "side": "ecore:blocks/computer_case_side"
-    }
-}
