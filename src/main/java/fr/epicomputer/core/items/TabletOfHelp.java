@@ -1,9 +1,7 @@
 package fr.epicomputer.core.items;
 
-import java.util.Iterator;
-import java.util.List;
-
 import fr.epicomputer.core.EpicomputerCore;
+import fr.epicomputer.core.gui.GuiWiki;
 import fr.epicomputer.core.init.ItemsCore;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,11 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
-import net.minecraftforge.client.event.RenderGameOverlayEvent.Text;
 
 public class TabletOfHelp extends Item {
 	
@@ -32,19 +26,11 @@ public class TabletOfHelp extends Item {
     @Override
 
     public ActionResult <ItemStack>onItemRightClick(World world, EntityPlayer player, EnumHand hand)
-
     {
-
-        if(!world.isRemote)
-
-        {
-
-        	Minecraft.getMinecraft().displayGuiScreen(new GuiWiki());
-
-        }
-
+    	
+    	Minecraft.getMinecraft().displayGuiScreen(new GuiWiki());
+    	
         return new ActionResult(EnumActionResult.PASS, player.getHeldItem(hand));
-
     }
     
 }

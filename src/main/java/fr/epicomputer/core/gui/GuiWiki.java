@@ -10,17 +10,21 @@ public class GuiWiki extends GuiScreen{
 	
 	private static final ResourceLocation background = new ResourceLocation(EpicomputerCore.MODID, "textures/gui/tablet_of_help.png");
     
-	int guiWidth = 400; //vers la droite
-	int guiHeight = 300;// vers le haut/bas
+	int guiWidth = 232; //vers la droite
+	int guiHeight = 128;// vers le haut/bas
 	
-	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-	    
-	    this.drawDefaultBackground();
+	
+	public void drawScreen(int x, int y, float ticks)
+    { 
+	    //this.drawDefaultBackground();
 	    this.mc.getTextureManager().bindTexture(background);
-	    this.drawTexturedModalRect(0,0, 0, 0, this.width, this.height);
-	 
+	    GL11.glColor4f(1, 1, 1, 1);
+	    this.drawTexturedModalRect((guiHeight + this.height) / 4,(width - guiWidth) / 4, 0, 0, guiWidth, guiHeight);
+	    
+	    
+	    super.drawScreen(x, y, ticks);
 	}
-	
+	@Override
 	public boolean doesGuiPauseGame()
     {
         return false;
