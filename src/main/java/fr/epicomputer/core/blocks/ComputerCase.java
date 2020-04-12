@@ -27,6 +27,42 @@ import net.minecraft.world.World;
 
 public class ComputerCase extends BlockContainer {
 	
+	public enum ComputerErrorType{
+		
+		NO_BIOS(0, "BIOS element not found"),
+		NO_CPU(1, "CPU element not found"),
+		NO_RAM(2, "RAM element not found"),
+		NO_GRAPHICCARD(3, "Graphic Card element not found"),
+		NO_HARDDISK(4, "Hard Disk element not found");
+		
+		private int id;
+		private String error;
+		
+		private ComputerErrorType(int id, String error) {
+			this.id = id;
+			this.error = error;
+		}
+
+		public int getId() {
+			return id;
+		}
+
+		public void setId(int id) {
+			this.id = id;
+		}
+
+		public String getError() {
+			return error;
+		}
+
+		public void setError(String error) {
+			this.error = error;
+		}
+		
+		
+		
+	}
+	
 	public enum ComputerState{
 		
 		ERROR,
