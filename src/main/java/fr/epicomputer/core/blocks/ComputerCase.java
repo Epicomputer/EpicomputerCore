@@ -38,7 +38,7 @@ public class ComputerCase extends BlockContainer {
 	
 	public static String NAME = null;
 	public static final PropertyDirection FACING = BlockHorizontal.FACING;
-	public static ComputerState state;
+	public ComputerState state;
 	
 	public ComputerCase(Material materialIn, ComputerState state) {
 		 super(materialIn);
@@ -63,6 +63,18 @@ public class ComputerCase extends BlockContainer {
 		 setCreativeTab(EpicomputerCore.tabsCore);
 	}
     
+	public void setComputerState(ComputerState state) {
+		
+		this.state = state;
+		
+	}
+	
+	public ComputerState getComputerState() {
+		
+		return this.state;
+		
+	}
+	
     public EnumBlockRenderType getRenderType(IBlockState state)
     {
         return EnumBlockRenderType.MODEL;

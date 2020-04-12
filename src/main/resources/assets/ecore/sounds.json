@@ -1,0 +1,8 @@
+{
+    "computer_case_on": { 
+        "category": "block", 
+        "sounds": ["ecore:computer_case_on"], 
+        "subtitle": "ecore.subtitle.testSound",
+        "stream": true
+    }
+}

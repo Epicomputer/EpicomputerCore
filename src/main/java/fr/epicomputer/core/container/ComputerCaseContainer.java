@@ -30,7 +30,6 @@ public class ComputerCaseContainer extends Container{
 	 this.addSlotToContainer(new SlotSingleItem(tile, 5, 147, 15,ItemsCore.HARDDISK ));
 	 
 	 //this.addSlotToContainer(new SlotOutput(tile, 4, 116, 17));
-	    
 	 //inventory
 	 int i;
 	    for(i = 0; i < 3; ++i) {

@@ -2,9 +2,12 @@ package fr.epicomputer.core.gui;
 
 import fr.epicomputer.core.EpicomputerCore;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.PositionedSoundRecord;
+import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -19,6 +22,8 @@ public class GuiButtonPowerComputer extends GuiButton {
     {
         super(buttonID, xPos, yPos, 30, 30, "");
     }
+	
+	
 	
 	public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks)
     {
@@ -38,4 +43,8 @@ public class GuiButtonPowerComputer extends GuiButton {
         }
     }
 
+	public void playPressSound(SoundHandler soundHandlerIn){
+		soundHandlerIn.playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.BLOCK_ANVIL_BREAK, 1.0F));
+	}
+	
 }

@@ -10,6 +10,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
 public class TabletOfHelp extends Item {
@@ -24,11 +26,12 @@ public class TabletOfHelp extends Item {
     }
 
     @Override
-
     public ActionResult <ItemStack>onItemRightClick(World world, EntityPlayer player, EnumHand hand)
     {
     	
     	Minecraft.getMinecraft().displayGuiScreen(new GuiWiki());
+    	
+    	player.playSound(new SoundEvent(new ResourceLocation("ecore:computer_case_on")), 1.0F, 1.0F);
     	
         return new ActionResult(EnumActionResult.PASS, player.getHeldItem(hand));
     }
