@@ -1,5 +1,7 @@
 package fr.epicomputer.core.blocks;
 
+import java.util.Random;
+
 import fr.epicomputer.core.EpicomputerCore;
 import fr.epicomputer.core.init.BlocksCore;
 import fr.epicomputer.core.tiles.TileEntityComputerCase;
@@ -15,6 +17,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
@@ -23,17 +26,26 @@ import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.storage.loot.functions.SetMetadata;
 
 
 public class ComputerCase extends BlockContainer {
 	
+	public static String NAME = null;
+	public static final PropertyDirection FACING = BlockHorizontal.FACING;
+	public ComputerState state;
+	public String address = "";
+	public Thread computerthread;
+	public TileEntityComputerCase tile;
+	public boolean isNBT;
+	
 	public enum ComputerErrorType{
 		
-		NO_BIOS(0, "BIOS element not found"),
-		NO_CPU(1, "CPU element not found"),
-		NO_RAM(2, "RAM element not found"),
-		NO_GRAPHICCARD(3, "Graphic Card element not found"),
-		NO_HARDDISK(4, "Hard Disk element not found");
+		NO_BIOS(0, " BIOS element not found"),
+		NO_CPU(1, " CPU element not found"),
+		NO_RAM(2, " RAM element not found"),
+		NO_GRAPHICCARD(3, " Graphic Card element not found"),
+		NO_HARDDISK(4, " Hard Disk element not found");
 		
 		private int id;
 		private String error;
@@ -65,16 +77,36 @@ public class ComputerCase extends BlockContainer {
 	
 	public enum ComputerState{
 		
-		ERROR,
-		BOOT,
-		ON,
-		OFF
+		ERROR(0, "error"),
+		BOOT(1, "boot"),
+		ON(2, "on"),
+		OFF(3, "off");
 		
+		public String getState() {
+			return state;
+		}
+
+		public void setState(String state) {
+			this.state = state;
+		}
+
+		public int getId() {
+			return id;
+		}
+
+		public void setId(int id) {
+			this.id = id;
+		}
+
+		private String state;
+		private int id;
+		
+		private ComputerState(int id, String state) {
+			
+			this.state = state;
+			
+		}
 	}
-	
-	public static String NAME = null;
-	public static final PropertyDirection FACING = BlockHorizontal.FACING;
-	public ComputerState state;
 	
 	public ComputerCase(Material materialIn, ComputerState state) {
 		 super(materialIn);
@@ -91,30 +123,18 @@ public class ComputerCase extends BlockContainer {
 			 NAME = "computer_case";
 		 }
 		 
+		 Random rand = new Random();
+		 
+		 address = rand.nextInt(10000) + "";
+		 
 		 BlocksCore.setBlockName(this, NAME);
 		 setResistance(5.0F);
 		 //this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
 	        
 		 setHardness(3.0F);
 		 setCreativeTab(EpicomputerCore.tabsCore);
+		 
 	}
-    
-	public void setComputerState(ComputerState state) {
-		
-		this.state = state;
-		
-	}
-	
-	public ComputerState getComputerState() {
-		
-		return this.state;
-		
-	}
-	
-    public EnumBlockRenderType getRenderType(IBlockState state)
-    {
-        return EnumBlockRenderType.MODEL;
-    }
     
  
 //////////////////////////////////////////
@@ -162,7 +182,10 @@ public class ComputerCase extends BlockContainer {
      
     @Override
     public TileEntity createNewTileEntity(World world, int metadata)  {
-        return new TileEntityComputerCase();
+        
+    	tile = new TileEntityComputerCase();
+    	
+    	return tile;
     }
     @Override
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
@@ -289,6 +312,63 @@ public class ComputerCase extends BlockContainer {
         }
     }
   
+    public static ComputerState getComputerState(World world, BlockPos pos) {
+		
+		if (world.getBlockState(pos).getBlock() instanceof ComputerCase) {
+			return ((ComputerCase) world.getBlockState(pos).getBlock()).state;
+		}
+		
+		return null;
+		
+	}
 	
+    public EnumBlockRenderType getRenderType(IBlockState state)
+    {
+        return EnumBlockRenderType.MODEL;
+    }
 
+    public static String getAddress(World world, BlockPos pos) {
+    	
+    	if(world.getBlockState(pos).getBlock() instanceof ComputerCase) {
+    		
+    		return ((ComputerCase) world.getBlockState(pos).getBlock()).address;
+    		
+    	}
+    	
+    	return null;
+    	
+    }
+    
+    public static void setNBT(World world, BlockPos pos) {
+    	
+    	NBTTagCompound nbtR = new NBTTagCompound();
+    	world.getTileEntity(pos).readFromNBT(nbtR);
+    	
+    	System.out.println(nbtR.getString("Address"));
+    	nbtR.getString("State");
+    	
+    	if(((ComputerCase) world.getBlockState(pos).getBlock()).isNBT == true) System.out.println("LULULULULULULLULULULLULULULULULLULULULULULULULULULL");
+    	
+    	if (world.getTileEntity(pos) instanceof TileEntityComputerCase) {
+    		
+    		((ComputerCase) world.getBlockState(pos).getBlock()).isNBT = true;
+    		
+    		NBTTagCompound nbt = new NBTTagCompound();
+        	
+        	nbt.setString("Address", getAddress(world, pos));
+        	nbt.setString("State", getComputerState(world, pos).getState());
+        	
+        	world.getTileEntity(pos).writeToNBT(nbt);
+		}
+    	
+    }
+    
+    public static Thread getComputerthread(World world, BlockPos pos) {
+		return ((ComputerCase) world.getBlockState(pos).getBlock()).computerthread;
+	}
+
+	public static void setComputerthread(Thread computerthread, World world, BlockPos pos) {
+		((ComputerCase) world.getBlockState(pos).getBlock()).computerthread = computerthread;
+	}
+    
 }

@@ -18,9 +18,9 @@ public class GuiButtonPowerComputer extends GuiButton {
 	protected static final ResourceLocation BUTTON_TEXTURES = new ResourceLocation(EpicomputerCore.MODID, "textures/gui/power_button.png");
     
 
-	public GuiButtonPowerComputer(int buttonID, int xPos, int yPos)
+	public GuiButtonPowerComputer(int buttonID, int xPos, int yPos, String text)
     {
-        super(buttonID, xPos, yPos, 30, 30, "");
+        super(buttonID, xPos, yPos, 30, 30, text);
     }
 	
 	

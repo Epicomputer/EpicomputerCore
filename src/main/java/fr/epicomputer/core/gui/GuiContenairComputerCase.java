@@ -4,6 +4,7 @@ import java.awt.List;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.concurrent.RunnableScheduledFuture;
 
 import fr.epicomputer.core.EpicomputerCore;
 import fr.epicomputer.core.blocks.ComputerCase;
@@ -72,7 +73,9 @@ public class GuiContenairComputerCase extends GuiContainer{
 	                177, 12 - textureHeight, 27, textureHeight);
 	    }
 
-	    this.buttonList.add(powerButton = new GuiButtonPowerComputer(0, this.width / 2 - 50, j + 30 ));
+	    this.buttonList.clear();
+	    
+	    this.buttonList.add(powerButton = new GuiButtonPowerComputer(0, this.width / 2 - 50, j + 30, "Turn on the computer"));
 
 	    this.fontRenderer.drawString(this.tile.getName(), i + 80, j + 45, 0xFFFFFF);
 	}
@@ -80,48 +83,91 @@ public class GuiContenairComputerCase extends GuiContainer{
 	@SubscribeEvent
 	protected void actionPerformed(GuiButton button) throws IOException{
 			
+		System.out.println(ComputerCase.getComputerState(this.tile.getWorld(), this.tile.getPos()));
+		System.out.println(ComputerCase.getAddress(this.tile.getWorld(), this.tile.getPos()));
 			switch(button.id)
 			{
 			case 0:
-				if(this.tile.getStackInSlot(1).getItem().equals(ItemsCore.BIOS) && 
-				   this.tile.getStackInSlot(2).getItem().equals(ItemsCore.PROCESSOR) &&
-				   this.tile.getStackInSlot(3).getItem().equals(ItemsCore.RAM) &&
-				   this.tile.getStackInSlot(4).getItem().equals(ItemsCore.CARDGRAPHICS) &&
-				   this.tile.getStackInSlot(5).getItem().equals(ItemsCore.HARDDISK) ){
-					
-					
-				}else { 
-					
-					if (this.tile.getStackInSlot(1).getItem() == Items.AIR) {	
-						errorList.add(ComputerErrorType.NO_BIOS);
-					}
-					if (this.tile.getStackInSlot(2).getItem() == Items.AIR) {	
-						errorList.add(ComputerErrorType.NO_CPU);
-					}
-					if (this.tile.getStackInSlot(3).getItem() == Items.AIR) {	
-						errorList.add(ComputerErrorType.NO_RAM);
-					}
-					if (this.tile.getStackInSlot(4).getItem() == Items.AIR) {	
-						errorList.add(ComputerErrorType.NO_GRAPHICCARD);
-					}
-					if (this.tile.getStackInSlot(5).getItem() == Items.AIR) {	
-						errorList.add(ComputerErrorType.NO_RAM);
-					}
-				}
 				
-				if (!errorList.isEmpty()){
+				
+				if (ComputerCase.getComputerState(this.tile.getWorld(), this.tile.getPos()) != ComputerState.ON) {
+					if(this.tile.getStackInSlot(1).getItem().equals(ItemsCore.BIOS) && 
+							   this.tile.getStackInSlot(2).getItem().equals(ItemsCore.PROCESSOR) &&
+							   this.tile.getStackInSlot(3).getItem().equals(ItemsCore.RAM) &&
+							   this.tile.getStackInSlot(4).getItem().equals(ItemsCore.CARDGRAPHICS) &&
+							   this.tile.getStackInSlot(5).getItem().equals(ItemsCore.HARDDISK) ){
+								
+								ComputerCase.setState(ComputerState.BOOT, this.tile.getWorld(), this.tile.getPos());
+								
+								Thread thread = new Thread("computer-" + ComputerCase.getAddress(this.tile.getWorld(), this.tile.getPos())) {
+									
+									@Override
+									public void run() {
+										
+										try {
+											this.sleep(1500L);
+											ComputerCase.setState(ComputerState.ON, tile.getWorld(), tile.getPos());
+											ComputerCase.setNBT(tile.getWorld(), tile.getPos());
+											
+										} catch (InterruptedException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
+										
+									}
+									
+								};
+								
+								ComputerCase.setComputerthread(thread, this.tile.getWorld(), this.tile.getPos());
+								
+								ComputerCase.getComputerthread(this.tile.getWorld(), this.tile.getPos()).start();
+								
+							}else { 
+								
+								if (this.tile.getStackInSlot(1).getItem() == Items.AIR) {	
+									errorList.add(ComputerErrorType.NO_BIOS);
+								}
+								if (this.tile.getStackInSlot(2).getItem() == Items.AIR) {	
+									errorList.add(ComputerErrorType.NO_CPU);
+								}
+								if (this.tile.getStackInSlot(3).getItem() == Items.AIR) {	
+									errorList.add(ComputerErrorType.NO_RAM);
+								}
+								if (this.tile.getStackInSlot(4).getItem() == Items.AIR) {	
+									errorList.add(ComputerErrorType.NO_GRAPHICCARD);
+								}
+								if (this.tile.getStackInSlot(5).getItem() == Items.AIR) {	
+									errorList.add(ComputerErrorType.NO_HARDDISK);
+								}
+							}
+							
+							if (!errorList.isEmpty()){
+								
+								for (EntityPlayer player : this.tile.getWorld().playerEntities) {
+									
+									ArrayList<String> errors = new ArrayList();
+									
+									for (int i = 0; i < errorList.size(); i++) {
+										
+										errors.add(errorList.get(i).getError());
+										
+									}
+									player.sendMessage(new TextComponentString("Error: " + String.join(",", errors)));
+									
+									ComputerCase.setState(ComputerState.ERROR, this.tile.getWorld(), this.tile.getPos());
+									
+									errors.clear();
+									errorList.clear();
+									
+								}
+								
+							}
+				}else{
 					
-					for (EntityPlayer player : this.tile.getWorld().playerEntities) {
-						
-						ArrayList<String> errors = new ArrayList();
-						
-						for (int i = 0; i < errorList.size(); i++) {
-							
-							errors.add(errorList.get(i).getError());
-							
-						}
-						player.sendMessage(new TextComponentString("Error: " + String.join(",", errors)));
-						
+					if (ComputerCase.getComputerthread(this.tile.getWorld(), this.tile.getPos()) != null) {
+						ComputerCase.getComputerthread(this.tile.getWorld(), this.tile.getPos()).stop();
+					}else {
+						System.out.println("CALM DOWN BRO !");
 					}
 					
 				}
@@ -132,7 +178,14 @@ public class GuiContenairComputerCase extends GuiContainer{
 				//tu met rien ici
 				break;
 			}
+			
+			
+			
 		super.actionPerformed(button);
 	}
-
+	
+	public boolean doesGuiPauseGame(){
+        return false;
+    }
+	
 }
