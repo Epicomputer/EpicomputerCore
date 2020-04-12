@@ -1,5 +1,7 @@
 package fr.epicomputer.core.gui;
 
+import java.io.IOException;
+
 import fr.epicomputer.core.EpicomputerCore;
 import fr.epicomputer.core.container.ComputerCaseContainer;
 import fr.epicomputer.core.tiles.TileEntityComputerCase;
@@ -19,7 +21,11 @@ public class GuiContenairComputerCase extends GuiContainer{
         this.tile = tile;
 	}
 	
-	
+	@Override
+	   public void updateScreen()
+	   {
+	       super.updateScreen();
+	   }
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
 	    int i = (this.width - this.xSize) / 2;
@@ -42,6 +48,24 @@ public class GuiContenairComputerCase extends GuiContainer{
 	    this.buttonList.add(new GuiButtonPowerComputer(0, this.width / 2 - 50, j + 30 ));
 
 	    this.fontRenderer.drawString(this.tile.getName(), i + 80, j + 45, 0xFFFFFF);
+	}
+	
+	@Override
+	protected void actionPerformed(GuiButton button) throws IOException
+	{
+		switch(button.id)
+		{
+		case 0:
+			//le bouton power
+			
+			break;
+			
+		default:
+			//tu met rien ici
+			break;
+		}
+		
+		super.actionPerformed(button);
 	}
 
 }
