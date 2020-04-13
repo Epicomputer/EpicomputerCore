@@ -10,12 +10,14 @@ import fr.epicomputer.core.init.ItemsCore;
 import fr.epicomputer.core.tiles.TileEntityComputerCase;
 import fr.epicomputer.core.tiles.TileEntityComputerCase.ComputerErrorType;
 import fr.epicomputer.core.tiles.TileEntityComputerCase.ComputerState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -73,14 +75,15 @@ public class GuiContenairComputerCase extends GuiContainer{
 			{
 			case 0:
 				
-				
+				EntityPlayer joueur = Minecraft.getMinecraft().player;
 				if (TileEntityComputerCase.getComputerState(this.tile.getWorld(), this.tile.getPos()) != ComputerState.ON) {
 					if(this.tile.getStackInSlot(1).getItem().equals(ItemsCore.BIOS) && 
 							   this.tile.getStackInSlot(2).getItem().equals(ItemsCore.PROCESSOR) &&
 							   this.tile.getStackInSlot(3).getItem().equals(ItemsCore.RAM) &&
 							   this.tile.getStackInSlot(4).getItem().equals(ItemsCore.CARDGRAPHICS) &&
 							   this.tile.getStackInSlot(5).getItem().equals(ItemsCore.HARDDISK) ){
-								
+						
+						
 								ComputerCase.setState(ComputerState.BOOT, this.tile.getWorld(), this.tile.getPos());
 								
 								
@@ -91,7 +94,8 @@ public class GuiContenairComputerCase extends GuiContainer{
 										
 										try {
 											this.sleep(1500L);
-											
+											joueur.playSound(new SoundEvent(new ResourceLocation("ecore:computer_startup")), 1.0F, 1.0F);
+						
 											ComputerCase.setState(ComputerState.ON, tile.getWorld(), tile.getPos());
 											//TileEntityComputerCase.setNBT(tile.getWorld(), tile.getPos());
 											

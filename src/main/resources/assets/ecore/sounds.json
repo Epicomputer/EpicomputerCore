@@ -4,5 +4,11 @@
         "sounds": ["ecore:computer_case_on"], 
         "subtitle": "ecore.subtitle.testSound",
         "stream": true
+    },
+    "computer_startup": { 
+        "category": "block", 
+        "sounds": ["ecore:computer_start"], 
+        "subtitle": "ecore.subtitle.startupSound",
+        "stream": true
     }
 }
