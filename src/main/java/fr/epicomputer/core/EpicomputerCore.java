@@ -62,8 +62,8 @@ public class EpicomputerCore {
     {
         logger = event.getModLog();
         proxy.preInit(event.getSuggestedConfigurationFile());
-        GameRegistry.registerTileEntity(TileEntityComputerCase.class, EpicomputerCore.MODID +":tile_computer_case");
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
+        GameRegistry.registerTileEntity(TileEntityComputerCase.class, EpicomputerCore.MODID +":tile_computer_case");
     }
  
     @EventHandler

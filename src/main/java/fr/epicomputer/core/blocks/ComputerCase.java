@@ -5,6 +5,7 @@ import java.util.Random;
 import fr.epicomputer.core.EpicomputerCore;
 import fr.epicomputer.core.init.BlocksCore;
 import fr.epicomputer.core.tiles.TileEntityComputerCase;
+import fr.epicomputer.core.tiles.TileEntityComputerCase.ComputerState;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
@@ -31,101 +32,26 @@ import net.minecraft.world.storage.loot.functions.SetMetadata;
 
 public class ComputerCase extends BlockContainer {
 	
-	public static String NAME = null;
 	public static final PropertyDirection FACING = BlockHorizontal.FACING;
+	public String NAME;
 	public ComputerState state;
-	public String address = "";
-	public Thread computerthread;
 	public TileEntityComputerCase tile;
-	public boolean isNBT;
-	
-	public enum ComputerErrorType{
-		
-		NO_BIOS(0, " BIOS element not found"),
-		NO_CPU(1, " CPU element not found"),
-		NO_RAM(2, " RAM element not found"),
-		NO_GRAPHICCARD(3, " Graphic Card element not found"),
-		NO_HARDDISK(4, " Hard Disk element not found");
-		
-		private int id;
-		private String error;
-		
-		private ComputerErrorType(int id, String error) {
-			this.id = id;
-			this.error = error;
-		}
-
-		public int getId() {
-			return id;
-		}
-
-		public void setId(int id) {
-			this.id = id;
-		}
-
-		public String getError() {
-			return error;
-		}
-
-		public void setError(String error) {
-			this.error = error;
-		}
-		
-		
-		
-	}
-	
-	public enum ComputerState{
-		
-		ERROR(0, "error"),
-		BOOT(1, "boot"),
-		ON(2, "on"),
-		OFF(3, "off");
-		
-		public String getState() {
-			return state;
-		}
-
-		public void setState(String state) {
-			this.state = state;
-		}
-
-		public int getId() {
-			return id;
-		}
-
-		public void setId(int id) {
-			this.id = id;
-		}
-
-		private String state;
-		private int id;
-		
-		private ComputerState(int id, String state) {
-			
-			this.state = state;
-			
-		}
-	}
+	public BlockPos pos;
 	
 	public ComputerCase(Material materialIn, ComputerState state) {
 		 super(materialIn);
 		 
-		 this.state = state;
-		 
 		 if (state == ComputerState.ERROR) {
-			NAME = "computer_case_error";
-		 }else if(state == ComputerState.ON) {
-			 NAME = "computer_case_on";
-		 }else if(state == ComputerState.BOOT) {
-			 NAME = "computer_case_boot";
-		 }else {
-			 NAME = "computer_case";
-		 }
+				NAME = "computer_case_error";
+			 }else if(state == ComputerState.ON) {
+				 NAME = "computer_case_on";
+			 }else if(state == ComputerState.BOOT) {
+				 NAME = "computer_case_boot";
+			 }else {
+				 NAME = "computer_case";
+			 }
 		 
-		 Random rand = new Random();
-		 
-		 address = rand.nextInt(10000) + "";
+		 this.state = state;
 		 
 		 BlocksCore.setBlockName(this, NAME);
 		 setResistance(5.0F);
@@ -181,13 +107,6 @@ public class ComputerCase extends BlockContainer {
     }
      
     @Override
-    public TileEntity createNewTileEntity(World world, int metadata)  {
-        
-    	tile = new TileEntityComputerCase();
-    	
-    	return tile;
-    }
-    @Override
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
         TileEntity tileentity = worldIn.getTileEntity(pos);
      
@@ -201,20 +120,33 @@ public class ComputerCase extends BlockContainer {
     
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        if (world.isRemote) {
+        
+    	this.pos = pos;
+    	
+    	if (world.isRemote) {
             return true;
         } else {
+        	
             TileEntity tileentity = world.getTileEntity(pos);
      
             if (tileentity instanceof TileEntityComputerCase) {
                 player.openGui(EpicomputerCore.instance, 0, world, pos.getX(),
                         pos.getY(), pos.getZ());
+                
             }
      
             return true;
         }
     }
   
+    @Override
+    public TileEntity createNewTileEntity(World world, int metadata)  {
+        
+    	tile = new TileEntityComputerCase(this.state);
+    	
+    	return tile;
+    }
+    
     @Override
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
     	worldIn.setBlockState(pos, state.withProperty(FACING, placer.getHorizontalFacing().getOpposite()), 2);
@@ -311,64 +243,10 @@ public class ComputerCase extends BlockContainer {
             worldIn.setTileEntity(pos, tileentity);
         }
     }
-  
-    public static ComputerState getComputerState(World world, BlockPos pos) {
-		
-		if (world.getBlockState(pos).getBlock() instanceof ComputerCase) {
-			return ((ComputerCase) world.getBlockState(pos).getBlock()).state;
-		}
-		
-		return null;
-		
-	}
 	
     public EnumBlockRenderType getRenderType(IBlockState state)
     {
         return EnumBlockRenderType.MODEL;
     }
-
-    public static String getAddress(World world, BlockPos pos) {
-    	
-    	if(world.getBlockState(pos).getBlock() instanceof ComputerCase) {
-    		
-    		return ((ComputerCase) world.getBlockState(pos).getBlock()).address;
-    		
-    	}
-    	
-    	return null;
-    	
-    }
-    
-    public static void setNBT(World world, BlockPos pos) {
-    	
-    	NBTTagCompound nbtR = new NBTTagCompound();
-    	world.getTileEntity(pos).readFromNBT(nbtR);
-    	
-    	System.out.println(nbtR.getString("Address"));
-    	nbtR.getString("State");
-    	
-    	if(((ComputerCase) world.getBlockState(pos).getBlock()).isNBT == true) System.out.println("LULULULULULULLULULULLULULULULULLULULULULULULULULULL");
-    	
-    	if (world.getTileEntity(pos) instanceof TileEntityComputerCase) {
-    		
-    		((ComputerCase) world.getBlockState(pos).getBlock()).isNBT = true;
-    		
-    		NBTTagCompound nbt = new NBTTagCompound();
-        	
-        	nbt.setString("Address", getAddress(world, pos));
-        	nbt.setString("State", getComputerState(world, pos).getState());
-        	
-        	world.getTileEntity(pos).writeToNBT(nbt);
-		}
-    	
-    }
-    
-    public static Thread getComputerthread(World world, BlockPos pos) {
-		return ((ComputerCase) world.getBlockState(pos).getBlock()).computerthread;
-	}
-
-	public static void setComputerthread(Thread computerthread, World world, BlockPos pos) {
-		((ComputerCase) world.getBlockState(pos).getBlock()).computerthread = computerthread;
-	}
     
 }

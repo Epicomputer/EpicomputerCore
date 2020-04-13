@@ -1,39 +1,23 @@
 package fr.epicomputer.core.gui;
 
-import java.awt.List;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.concurrent.RunnableScheduledFuture;
 
 import fr.epicomputer.core.EpicomputerCore;
 import fr.epicomputer.core.blocks.ComputerCase;
-import fr.epicomputer.core.blocks.ComputerCase.ComputerErrorType;
-import fr.epicomputer.core.blocks.ComputerCase.ComputerState;
 import fr.epicomputer.core.container.ComputerCaseContainer;
 import fr.epicomputer.core.init.ItemsCore;
 import fr.epicomputer.core.tiles.TileEntityComputerCase;
-import ibxm.Player;
-import net.minecraft.block.SoundType;
-import net.minecraft.client.audio.Sound;
-import net.minecraft.client.audio.SoundList;
+import fr.epicomputer.core.tiles.TileEntityComputerCase.ComputerErrorType;
+import fr.epicomputer.core.tiles.TileEntityComputerCase.ComputerState;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentString;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import scala.tools.nsc.doc.base.comment.Text;
 
 public class GuiContenairComputerCase extends GuiContainer{
 	
@@ -83,14 +67,14 @@ public class GuiContenairComputerCase extends GuiContainer{
 	@SubscribeEvent
 	protected void actionPerformed(GuiButton button) throws IOException{
 			
-		System.out.println(ComputerCase.getComputerState(this.tile.getWorld(), this.tile.getPos()));
-		System.out.println(ComputerCase.getAddress(this.tile.getWorld(), this.tile.getPos()));
+		System.out.println(TileEntityComputerCase.getComputerState(this.tile.getWorld(), this.tile.getPos()));
+		System.out.println(TileEntityComputerCase.getAddress(this.tile.getWorld(), this.tile.getPos()));
 			switch(button.id)
 			{
 			case 0:
 				
 				
-				if (ComputerCase.getComputerState(this.tile.getWorld(), this.tile.getPos()) != ComputerState.ON) {
+				if (TileEntityComputerCase.getComputerState(this.tile.getWorld(), this.tile.getPos()) != ComputerState.ON) {
 					if(this.tile.getStackInSlot(1).getItem().equals(ItemsCore.BIOS) && 
 							   this.tile.getStackInSlot(2).getItem().equals(ItemsCore.PROCESSOR) &&
 							   this.tile.getStackInSlot(3).getItem().equals(ItemsCore.RAM) &&
@@ -99,15 +83,17 @@ public class GuiContenairComputerCase extends GuiContainer{
 								
 								ComputerCase.setState(ComputerState.BOOT, this.tile.getWorld(), this.tile.getPos());
 								
-								Thread thread = new Thread("computer-" + ComputerCase.getAddress(this.tile.getWorld(), this.tile.getPos())) {
+								
+								new Thread("computer-" + TileEntityComputerCase.getAddress(this.tile.getWorld(), this.tile.getPos())) {
 									
 									@Override
 									public void run() {
 										
 										try {
 											this.sleep(1500L);
+											
 											ComputerCase.setState(ComputerState.ON, tile.getWorld(), tile.getPos());
-											ComputerCase.setNBT(tile.getWorld(), tile.getPos());
+											//TileEntityComputerCase.setNBT(tile.getWorld(), tile.getPos());
 											
 										} catch (InterruptedException e) {
 											// TODO Auto-generated catch block
@@ -116,11 +102,7 @@ public class GuiContenairComputerCase extends GuiContainer{
 										
 									}
 									
-								};
-								
-								ComputerCase.setComputerthread(thread, this.tile.getWorld(), this.tile.getPos());
-								
-								ComputerCase.getComputerthread(this.tile.getWorld(), this.tile.getPos()).start();
+								}.start();
 								
 							}else { 
 								
@@ -164,12 +146,9 @@ public class GuiContenairComputerCase extends GuiContainer{
 							}
 				}else{
 					
-					if (ComputerCase.getComputerthread(this.tile.getWorld(), this.tile.getPos()) != null) {
-						ComputerCase.getComputerthread(this.tile.getWorld(), this.tile.getPos()).stop();
-					}else {
-						System.out.println("CALM DOWN BRO !");
+					if (TileEntityComputerCase.getComputerthread(this.tile.getWorld(), this.tile.getPos()) != null) {
+						TileEntityComputerCase.getComputerthread(this.tile.getWorld(), this.tile.getPos()).stop();
 					}
-					
 				}
 				
 				break;

@@ -2,7 +2,7 @@ package fr.epicomputer.core.init;
 
 import fr.epicomputer.core.EpicomputerCore;
 import fr.epicomputer.core.blocks.ComputerCase;
-import fr.epicomputer.core.blocks.ComputerCase.ComputerState;
+import fr.epicomputer.core.tiles.TileEntityComputerCase.ComputerState;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 
