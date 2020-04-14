@@ -32,6 +32,7 @@ public class TileEntityComputerCase extends TileEntityLockable implements ITicka
 	public Thread computerthread;
 	public TileEntityComputerCase tile;
 	public boolean isNBT;
+	public boolean set;
 	
 	public enum ComputerErrorType{
 		
@@ -154,7 +155,7 @@ public class TileEntityComputerCase extends TileEntityLockable implements ITicka
 	public boolean hasCustomName() {
 	    return this.customName != null && !this.customName.isEmpty();
 	}
-	 
+	
 	@Override
 	public String getName() {
 	    return hasCustomName() ? this.customName : "tile.computer_case";
@@ -394,27 +395,53 @@ public class TileEntityComputerCase extends TileEntityLockable implements ITicka
     	return null;
     	
     }
+    
+    public String getAddress() {
+    	
+    	if(this.getWorld().getTileEntity(this.getPos()) instanceof TileEntityComputerCase) {
+    		
+    		return ((TileEntityComputerCase) this.getWorld().getTileEntity(this.getPos())).address;
+    		
+    	}
+    	
+    	return null;
+    	
+    }
+    
     public TileEntityComputerCase() {
     	
     }
-    public TileEntityComputerCase(ComputerState state) {
+    
+    public void setTile(ComputerState state){
+    	if (this.getWorld().getTileEntity(this.pos) instanceof TileEntityComputerCase) {
+    		if (((TileEntityComputerCase) this.getWorld().getTileEntity(this.pos)).address != "") {
+				return;
+			}
+		}
+    	
     	this.state = state;
-		 
+  		 
+		System.out.println(this.state);
+		
 		 if (state == ComputerState.ERROR) {
-			NAME = "computer_case_error";
+			this.NAME = "computer_case_error";
 		 }else if(state == ComputerState.ON) {
-			 NAME = "computer_case_on";
+			this.NAME = "computer_case_on";
 		 }else if(state == ComputerState.BOOT) {
-			 NAME = "computer_case_boot";
+			this.NAME = "computer_case_boot";
 		 }else {
-			 NAME = "computer_case";
+			this.NAME = "computer_case";
 		 }
 		 
 		 Random rand = new Random();
 		 
-		 address = rand.nextInt(10000) + "";
-		 System.out.println(address);
+		 this.address = rand.nextInt(10000) + "";
 		 
+		 this.set = true;
+    	
+    	System.out.println("setted:   " + this.set);
+		System.out.println("adress:   " + this.address);
+    	
     }
     
     public static void setNBT(World world, BlockPos pos) {
@@ -446,22 +473,70 @@ public class TileEntityComputerCase extends TileEntityLockable implements ITicka
     	
     }
     
+    //getState
+    
     public static ComputerState getComputerState(World world, BlockPos pos) {
 		
-		if (world.getBlockState(pos).getBlock() instanceof ComputerCase) {
+		if (world.getTileEntity(pos) instanceof TileEntityComputerCase) {
 			return ((TileEntityComputerCase) world.getTileEntity(pos)).state;
 		}
 		
 		return null;
 		
 	}
+    public ComputerState getComputerState() {
+		
+		if (this.getWorld().getTileEntity(this.getPos()) instanceof TileEntityComputerCase) {
+			return ((TileEntityComputerCase) this).state;
+		}
+		
+		return null;
+		
+	}
+    
+    //set computer state
+    
+    public static void setComputerState(World world, BlockPos pos, ComputerState state) {
+		
+		if (world.getTileEntity(pos) instanceof TileEntityComputerCase) {
+			((TileEntityComputerCase) world.getTileEntity(pos)).state = state;
+		}
+		
+	}
+    public void setComputerState(ComputerState state) {
+		
+		if (this.getWorld().getTileEntity(this.getPos()) instanceof TileEntityComputerCase) {
+			((TileEntityComputerCase) this).state = state;
+		}
+		
+	}
+    
+    //getThread of a computer
     
     public static Thread getComputerthread(World world, BlockPos pos) {
-		return ((TileEntityComputerCase) world.getTileEntity(pos)).computerthread;
+    	if (world.getTileEntity(pos) instanceof TileEntityComputerCase) {
+			return ((TileEntityComputerCase) world.getTileEntity(pos)).computerthread;
+		}
+		return null;
+	}
+    public Thread getComputerthread() {
+    	if (this.getWorld().getTileEntity(this.getPos()) instanceof TileEntityComputerCase) {
+			return ((TileEntityComputerCase) this).computerthread;
+		}
+		return null;
 	}
 
+    //SetThread to computer
+    
 	public static void setComputerthread(Thread computerthread, World world, BlockPos pos) {
-		((TileEntityComputerCase) world.getTileEntity(pos)).computerthread = computerthread;
+		if (world.getTileEntity(pos) instanceof TileEntityComputerCase) {
+			((TileEntityComputerCase) world.getTileEntity(pos)).computerthread = computerthread;
+		}
+	}
+	public void setComputerthread(Thread computerthread) {
+		if (this.getWorld().getTileEntity(this.getPos()) instanceof TileEntityComputerCase) {
+			((TileEntityComputerCase) this).computerthread = computerthread;
+		}
 	}
 
 }
