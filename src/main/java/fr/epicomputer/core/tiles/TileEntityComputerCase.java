@@ -394,7 +394,9 @@ public class TileEntityComputerCase extends TileEntityLockable implements ITicka
     	return null;
     	
     }
-    
+    public TileEntityComputerCase() {
+    	
+    }
     public TileEntityComputerCase(ComputerState state) {
     	this.state = state;
 		 

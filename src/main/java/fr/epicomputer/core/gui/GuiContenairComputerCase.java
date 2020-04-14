@@ -24,11 +24,12 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class GuiContenairComputerCase extends GuiContainer{
 	
 	private static final ResourceLocation background = new ResourceLocation(EpicomputerCore.MODID,"textures/gui/container/computer_gui.png");
-	private TileEntityComputerCase tile;
+	private static TileEntityComputerCase tile;
 	
 	private GuiButtonPowerComputer powerButton;
 	
 	public ArrayList<ComputerErrorType> errorList = new ArrayList();
+	
 	
 	public GuiContenairComputerCase(TileEntityComputerCase tile, InventoryPlayer playerInv) {
         super(new ComputerCaseContainer(tile, playerInv));
@@ -65,7 +66,8 @@ public class GuiContenairComputerCase extends GuiContainer{
 
 	    this.fontRenderer.drawString(this.tile.getName(), i + 80, j + 45, 0xFFFFFF);
 	}
-	
+	public static boolean start = false;
+	public static boolean antiSpamSound = false;
 	@SubscribeEvent
 	protected void actionPerformed(GuiButton button) throws IOException{
 			
@@ -81,9 +83,10 @@ public class GuiContenairComputerCase extends GuiContainer{
 							   this.tile.getStackInSlot(2).getItem().equals(ItemsCore.PROCESSOR) &&
 							   this.tile.getStackInSlot(3).getItem().equals(ItemsCore.RAM) &&
 							   this.tile.getStackInSlot(4).getItem().equals(ItemsCore.CARDGRAPHICS) &&
-							   this.tile.getStackInSlot(5).getItem().equals(ItemsCore.HARDDISK) ){
+							   this.tile.getStackInSlot(5).getItem().equals(ItemsCore.HARDDISK) )
+					{
 						
-						
+						if(antiSpamSound == false) {
 								ComputerCase.setState(ComputerState.BOOT, this.tile.getWorld(), this.tile.getPos());
 								
 								
@@ -93,12 +96,14 @@ public class GuiContenairComputerCase extends GuiContainer{
 									public void run() {
 										
 										try {
+											
 											this.sleep(1500L);
+											
 											joueur.playSound(new SoundEvent(new ResourceLocation("ecore:computer_startup")), 1.0F, 1.0F);
-						
+											antiSpamSound = true;
 											ComputerCase.setState(ComputerState.ON, tile.getWorld(), tile.getPos());
 											//TileEntityComputerCase.setNBT(tile.getWorld(), tile.getPos());
-											
+											onEveryday();
 										} catch (InterruptedException e) {
 											// TODO Auto-generated catch block
 											e.printStackTrace();
@@ -107,6 +112,11 @@ public class GuiContenairComputerCase extends GuiContainer{
 									}
 									
 								}.start();
+								}
+								
+									
+								
+									
 								
 							}else { 
 								
@@ -125,6 +135,7 @@ public class GuiContenairComputerCase extends GuiContainer{
 								if (this.tile.getStackInSlot(5).getItem() == Items.AIR) {	
 									errorList.add(ComputerErrorType.NO_HARDDISK);
 								}
+								start = false;
 							}
 							
 							if (!errorList.isEmpty()){
@@ -165,6 +176,35 @@ public class GuiContenairComputerCase extends GuiContainer{
 			
 			
 		super.actionPerformed(button);
+	}
+	
+	public static void onEveryday() {
+		//ComputerCase.setState(ComputerState.ON, tile.getWorld(), tile.getPos());
+		new Thread("start") {
+			
+			@Override
+			public void run() {
+				
+				try {
+					if (start == true) {
+					this.sleep(1L);
+					
+					ComputerCase.setState(ComputerState.ON, tile.getWorld(), tile.getPos());
+					//TileEntityComputerCase.setNBT(tile.getWorld(), tile.getPos());
+					this.start();
+					}else if (start = false){
+						antiSpamSound = false;
+						start = false;
+						this.stop();
+					}
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+			
+		}.start();
 	}
 	
 	public boolean doesGuiPauseGame(){

@@ -10,5 +10,11 @@
         "sounds": ["ecore:computer_start"], 
         "subtitle": "ecore.subtitle.startupSound",
         "stream": true
+    },
+    "computer_button": { 
+        "category": "block", 
+        "sounds": ["ecore:computer_button"], 
+        "subtitle": "ecore.subtitle.buttonSound",
+        "stream": true
     }
 }

@@ -2,13 +2,12 @@ package fr.epicomputer.core.gui;
 
 import fr.epicomputer.core.EpicomputerCore;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.audio.SoundHandler;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.init.SoundEvents;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -44,7 +43,9 @@ public class GuiButtonPowerComputer extends GuiButton {
     }
 
 	public void playPressSound(SoundHandler soundHandlerIn){
-		soundHandlerIn.playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.BLOCK_ANVIL_BREAK, 1.0F));
+		EntityPlayer player = Minecraft.getMinecraft().player;
+		player.playSound(new SoundEvent(new ResourceLocation("ecore:computer_button")), 3.0F, 1.0F);
+		
 	}
 	
 }
