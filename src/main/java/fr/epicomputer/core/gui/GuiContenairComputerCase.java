@@ -41,11 +41,19 @@ public class GuiContenairComputerCase extends GuiContainer{
 	   {
 	       super.updateScreen();
 	   }
+	
+	@Override
+	public void drawScreen(int mouseX, int mouseY, float partialTicks)
+    {
+        this.drawDefaultBackground();
+        super.drawScreen(mouseX, mouseY, partialTicks);
+        this.renderHoveredToolTip(mouseX, mouseY);
+    }
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
 	    int i = (this.width - this.xSize) / 2;
 	    int j = (this.height - this.ySize) / 2;
-	    this.drawDefaultBackground();
+	    this.fontRenderer.drawString(this.tile.getName(), i + 80, j + 45, 0xFFFFFF);
 	    this.mc.getTextureManager().bindTexture(background);
 	    this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
 	 
@@ -64,7 +72,7 @@ public class GuiContenairComputerCase extends GuiContainer{
 	    
 	    this.buttonList.add(powerButton = new GuiButtonPowerComputer(0, this.width / 2 - 50, j + 30, "Turn on the computer"));
 
-	    this.fontRenderer.drawString(this.tile.getName(), i + 80, j + 45, 0xFFFFFF);
+	    
 	}
 	public static boolean start = false;
 	public static boolean antiSpamSound = false;

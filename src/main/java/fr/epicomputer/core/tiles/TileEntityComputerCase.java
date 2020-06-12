@@ -32,7 +32,6 @@ public class TileEntityComputerCase extends TileEntityLockable implements ITicka
 	public Thread computerthread;
 	public TileEntityComputerCase tile;
 	public boolean isNBT;
-	public boolean set;
 	
 	public enum ComputerErrorType{
 		
@@ -155,7 +154,7 @@ public class TileEntityComputerCase extends TileEntityLockable implements ITicka
 	public boolean hasCustomName() {
 	    return this.customName != null && !this.customName.isEmpty();
 	}
-	
+	 
 	@Override
 	public String getName() {
 	    return hasCustomName() ? this.customName : "tile.computer_case";
@@ -266,17 +265,17 @@ public class TileEntityComputerCase extends TileEntityLockable implements ITicka
 	        return OreDictionary.getOres("plankWood").contains(
 	                new ItemStack(stack.getItem(), 1,
 	                        OreDictionary.WILDCARD_VALUE));
-	    // Le slot 4 je n'autorise que le bl�
+	    // Le slot 4 je n'autorise que le blï¿½
 	    if (index == 3)
 	        return stack.getItem() == Items.WHEAT;
-	    // Le slot 5 (celui du r�sultat) je n'autorise rien
+	    // Le slot 5 (celui du rï¿½sultat) je n'autorise rien
 	    if (index == 4)
 	        return false;
 	    // Sinon pour les slots 1 et 2 on met ce qu'on veut
 	    return true;
 	}
 	
-	/** V�rifie la distance entre le joueur et le bloc et que le bloc soit toujours pr�sent */
+	/** Vï¿½rifie la distance entre le joueur et le bloc et que le bloc soit toujours prï¿½sent */
 	public boolean isUsableByPlayer(EntityPlayer player) {
 	    return this.world.getTileEntity(this.pos) != this ? false : player
 	            .getDistanceSq((double) this.pos.getX() + 0.5D,
@@ -295,20 +294,20 @@ public class TileEntityComputerCase extends TileEntityLockable implements ITicka
 	}
 	
 	public boolean canSmelt() {
-	    // On r�cup�re le r�sultat de la recette
+	    // On rï¿½cupï¿½re le rï¿½sultat de la recette
 	    ItemStack result = this.getRecipeResult();
 	 
-	    // Le r�sultat est null si il n'y a pas de recette associ�e, donc on retourne faux
+	    // Le rï¿½sultat est null si il n'y a pas de recette associï¿½e, donc on retourne faux
 	    if (result != null) {
 	 
-	        // On r�cup�re le contenu du slot de r�sultat
+	        // On rï¿½cupï¿½re le contenu du slot de rï¿½sultat
 	        ItemStack slot4 = this.getStackInSlot(4);
 	 
 	        // Si il est vide on renvoie vrai
 	        if (slot4.isEmpty())
 	            return true;
 	 
-	        // Sinon on v�rifie que ce soit le m�me objet, les m�me m�tadata et que la taille finale ne sera pas trop grande
+	        // Sinon on vï¿½rifie que ce soit le mï¿½me objet, les mï¿½me mï¿½tadata et que la taille finale ne sera pas trop grande
 	        if (slot4.getItem() == result.getItem() && slot4.getItemDamage() == result.getItemDamage()) {
 	            int newStackSize = slot4.getCount() + result.getCount();
 	            if (newStackSize <= this.getInventoryStackLimit() && newStackSize <= slot4.getMaxStackSize()) {
@@ -320,16 +319,16 @@ public class TileEntityComputerCase extends TileEntityLockable implements ITicka
 	}
 	
 	public void smelt() {
-	    // Cette fonction n'est appel�e que si result != null, c'est pourquoi on ne fait pas de null check
+	    // Cette fonction n'est appelï¿½e que si result != null, c'est pourquoi on ne fait pas de null check
 	    ItemStack result = this.getRecipeResult();
-	    // On enl�ve un item de chaque ingr�dient
+	    // On enlï¿½ve un item de chaque ingrï¿½dient
 	    this.decrStackSize(0, 1);
 	    this.decrStackSize(1, 1);
-	    // On r�cup�re le slot de r�sultat
+	    // On rï¿½cupï¿½re le slot de rï¿½sultat
 	    ItemStack stack4 = this.getStackInSlot(4);
 	    // Si il est vide
 	    if (stack4.isEmpty()) {
-	        // On y ins�re une copie du r�sultat
+	        // On y insï¿½re une copie du rï¿½sultat
 	        this.setInventorySlotContents(4, result.copy());
 	    } else {
 	        // Sinon on augmente le nombre d'objets de l'ItemStack
@@ -341,12 +340,12 @@ public class TileEntityComputerCase extends TileEntityLockable implements ITicka
 	    return 200;
 	}
 	 
-	/** Temps que dure 1 unit� de carburant (ici : 1 planche + 1 bl�) */
+	/** Temps que dure 1 unitï¿½ de carburant (ici : 1 planche + 1 blï¿½) */
 	public int getFullBurnTime() {
 	    return 300;
 	}
 	 
-	/** Renvoie vrai si le feu est allum� */
+	/** Renvoie vrai si le feu est allumï¿½ */
 	public boolean isBurning() {
 	    return burningTimeLeft > 0;
 	}
@@ -355,7 +354,7 @@ public class TileEntityComputerCase extends TileEntityLockable implements ITicka
 	public void tick() {
 	    if (!this.world.isRemote) {
 	 
-	        /* Si le carburant br�le, on r�duit r�duit le temps restant */
+	        /* Si le carburant brï¿½le, on rï¿½duit rï¿½duit le temps restant */
 	        if (this.isBurning()) {
 	            this.burningTimeLeft--;
 	        }
@@ -395,53 +394,27 @@ public class TileEntityComputerCase extends TileEntityLockable implements ITicka
     	return null;
     	
     }
-    
-    public String getAddress() {
-    	
-    	if(this.getWorld().getTileEntity(this.getPos()) instanceof TileEntityComputerCase) {
-    		
-    		return ((TileEntityComputerCase) this.getWorld().getTileEntity(this.getPos())).address;
-    		
-    	}
-    	
-    	return null;
-    	
-    }
-    
     public TileEntityComputerCase() {
     	
     }
-    
-    public void setTile(ComputerState state){
-    	if (this.getWorld().getTileEntity(this.pos) instanceof TileEntityComputerCase) {
-    		if (((TileEntityComputerCase) this.getWorld().getTileEntity(this.pos)).address != "") {
-				return;
-			}
-		}
-    	
+    public TileEntityComputerCase(ComputerState state) {
     	this.state = state;
-  		 
-		System.out.println(this.state);
-		
+		 
 		 if (state == ComputerState.ERROR) {
-			this.NAME = "computer_case_error";
+			NAME = "computer_case_error";
 		 }else if(state == ComputerState.ON) {
-			this.NAME = "computer_case_on";
+			 NAME = "computer_case_on";
 		 }else if(state == ComputerState.BOOT) {
-			this.NAME = "computer_case_boot";
+			 NAME = "computer_case_boot";
 		 }else {
-			this.NAME = "computer_case";
+			 NAME = "computer_case";
 		 }
 		 
 		 Random rand = new Random();
 		 
-		 this.address = rand.nextInt(10000) + "";
+		 address = rand.nextInt(10000) + "";
+		 System.out.println(address);
 		 
-		 this.set = true;
-    	
-    	System.out.println("setted:   " + this.set);
-		System.out.println("adress:   " + this.address);
-    	
     }
     
     public static void setNBT(World world, BlockPos pos) {
@@ -473,70 +446,22 @@ public class TileEntityComputerCase extends TileEntityLockable implements ITicka
     	
     }
     
-    //getState
-    
     public static ComputerState getComputerState(World world, BlockPos pos) {
 		
-		if (world.getTileEntity(pos) instanceof TileEntityComputerCase) {
+		if (world.getBlockState(pos).getBlock() instanceof ComputerCase) {
 			return ((TileEntityComputerCase) world.getTileEntity(pos)).state;
 		}
 		
 		return null;
 		
 	}
-    public ComputerState getComputerState() {
-		
-		if (this.getWorld().getTileEntity(this.getPos()) instanceof TileEntityComputerCase) {
-			return ((TileEntityComputerCase) this).state;
-		}
-		
-		return null;
-		
-	}
-    
-    //set computer state
-    
-    public static void setComputerState(World world, BlockPos pos, ComputerState state) {
-		
-		if (world.getTileEntity(pos) instanceof TileEntityComputerCase) {
-			((TileEntityComputerCase) world.getTileEntity(pos)).state = state;
-		}
-		
-	}
-    public void setComputerState(ComputerState state) {
-		
-		if (this.getWorld().getTileEntity(this.getPos()) instanceof TileEntityComputerCase) {
-			((TileEntityComputerCase) this).state = state;
-		}
-		
-	}
-    
-    //getThread of a computer
     
     public static Thread getComputerthread(World world, BlockPos pos) {
-    	if (world.getTileEntity(pos) instanceof TileEntityComputerCase) {
-			return ((TileEntityComputerCase) world.getTileEntity(pos)).computerthread;
-		}
-		return null;
-	}
-    public Thread getComputerthread() {
-    	if (this.getWorld().getTileEntity(this.getPos()) instanceof TileEntityComputerCase) {
-			return ((TileEntityComputerCase) this).computerthread;
-		}
-		return null;
+		return ((TileEntityComputerCase) world.getTileEntity(pos)).computerthread;
 	}
 
-    //SetThread to computer
-    
 	public static void setComputerthread(Thread computerthread, World world, BlockPos pos) {
-		if (world.getTileEntity(pos) instanceof TileEntityComputerCase) {
-			((TileEntityComputerCase) world.getTileEntity(pos)).computerthread = computerthread;
-		}
-	}
-	public void setComputerthread(Thread computerthread) {
-		if (this.getWorld().getTileEntity(this.getPos()) instanceof TileEntityComputerCase) {
-			((TileEntityComputerCase) this).computerthread = computerthread;
-		}
+		((TileEntityComputerCase) world.getTileEntity(pos)).computerthread = computerthread;
 	}
 
 }

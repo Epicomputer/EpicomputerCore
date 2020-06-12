@@ -34,7 +34,7 @@ public class ComputerCase extends BlockContainer {
 	
 	public static final PropertyDirection FACING = BlockHorizontal.FACING;
 	public String NAME;
-	public ComputerState state = ComputerState.OFF;
+	public ComputerState state;
 	public TileEntityComputerCase tile;
 	public BlockPos pos;
 	
@@ -50,6 +50,8 @@ public class ComputerCase extends BlockContainer {
 			 }else {
 				 NAME = "computer_case";
 			 }
+		 
+		 this.state = state;
 		 
 		 BlocksCore.setBlockName(this, NAME);
 		 setResistance(5.0F);
@@ -140,13 +142,9 @@ public class ComputerCase extends BlockContainer {
     @Override
     public TileEntity createNewTileEntity(World world, int metadata)  {
         
-    	tile = new TileEntityComputerCase();
-        	
-    	tile.setTile(this.state);
-
-    	System.out.println(this.tile.getAddress());
-    		
-        return tile;
+    	tile = new TileEntityComputerCase(this.state);
+    	
+    	return tile;
     }
     
     @Override
