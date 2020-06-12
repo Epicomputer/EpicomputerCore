@@ -49,11 +49,18 @@ public class GuiContenairComputerCase extends GuiContainer{
         super.drawScreen(mouseX, mouseY, partialTicks);
         this.renderHoveredToolTip(mouseX, mouseY);
     }
+	
+	/*@Override
+	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
+    {
+		//String s = this.tile.getName();
+        //this.fontRenderer.drawString(this.tile.getName(), this.xSize / 2 - this.fontRenderer.getStringWidth(s) / 2, 6, 0xFFFFFF);
+	}*/
+	
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
 	    int i = (this.width - this.xSize) / 2;
 	    int j = (this.height - this.ySize) / 2;
-	    this.fontRenderer.drawString(this.tile.getName(), i + 80, j + 45, 0xFFFFFF);
 	    this.mc.getTextureManager().bindTexture(background);
 	    this.drawTexturedModalRect(i, j, 0, 0, this.xSize, this.ySize);
 	 
