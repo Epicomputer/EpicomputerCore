@@ -33,6 +33,7 @@ public class ItemsCore
     //public static final Item COMPUTER_CASE_BOOT = new ItemBlock(BlocksCore.COMPUTER_CASE_BOOT).setRegistryName(BlocksCore.COMPUTER_CASE_BOOT.getRegistryName());
     //public static final Item COMPUTER_CASE_ERROR = new ItemBlock(BlocksCore.COMPUTER_CASE_ERROR).setRegistryName(BlocksCore.COMPUTER_CASE_ERROR.getRegistryName());
     //public static final Item COMPUTER_CASE_ON = new ItemBlock(BlocksCore.COMPUTER_CASE_ON).setRegistryName(BlocksCore.COMPUTER_CASE_ON.getRegistryName());
+    public static final Item SMALL_SPEAKER = new ItemBlock(BlocksCore.SMALL_SPEAKER).setRegistryName(BlocksCore.SMALL_SPEAKER.getRegistryName());
     
     public static void setItemName(Item item, String name)
     {
@@ -54,6 +55,7 @@ public class ItemsCore
     	registerModel(TABLETOFHELP, 0);
     	//block item
     	registerModel(COMPUTER_CASE, 0);
+    	registerModel(SMALL_SPEAKER, 0);
     }
  
     @SideOnly(Side.CLIENT)

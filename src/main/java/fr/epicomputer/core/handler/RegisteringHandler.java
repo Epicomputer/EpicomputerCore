@@ -16,22 +16,28 @@ public class RegisteringHandler {
 	    		BlocksCore.COMPUTER_CASE,
 	    		BlocksCore.COMPUTER_CASE_ON,
 	    		BlocksCore.COMPUTER_CASE_BOOT,
-	    		BlocksCore.COMPUTER_CASE_ERROR
+	    		BlocksCore.COMPUTER_CASE_ERROR,
+	    		BlocksCore.SMALL_SPEAKER
 	    		);
 	}
 	
 	@SubscribeEvent
-    public void registerItems(RegistryEvent.Register<Item> event) {
-		
+	public void registerItems(RegistryEvent.Register<Item> event) {
+
 		event.getRegistry().registerAll(
-			ItemsCore.BIOS, 
-			ItemsCore.COMPUTER_CASE, 
-			ItemsCore.PROCESSOR, 
-			ItemsCore.RAM, 
-			ItemsCore.CARDGRAPHICS, 
-			ItemsCore.HARDDISK,
-			ItemsCore.TABLETOFHELP
-		);
-        
+				////////// Blocks/////////////
+
+				ItemsCore.COMPUTER_CASE, 
+				ItemsCore.SMALL_SPEAKER,
+
+				////////// Items/////////////
+
+				ItemsCore.BIOS, 
+				ItemsCore.PROCESSOR, 
+				ItemsCore.RAM, 
+				ItemsCore.CARDGRAPHICS, 
+				ItemsCore.HARDDISK,
+				ItemsCore.TABLETOFHELP);
+
     }
 }

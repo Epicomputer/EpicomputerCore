@@ -19,7 +19,7 @@ public class GuiButtonPowerComputer extends GuiButton {
 
 	public GuiButtonPowerComputer(int buttonID, int xPos, int yPos, String text)
     {
-        super(buttonID, xPos, yPos, 30, 30, text);
+        super(buttonID, xPos, yPos, 20, 20, text);
     }
 	
 	

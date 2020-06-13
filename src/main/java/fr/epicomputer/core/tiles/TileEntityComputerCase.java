@@ -22,7 +22,7 @@ import net.minecraftforge.oredict.OreDictionary;
 public class TileEntityComputerCase extends TileEntityLockable implements ITickable {
 	
 	public static String NAME = null;
-	private NonNullList<ItemStack> stacks = NonNullList.withSize(6, ItemStack.EMPTY);
+	private NonNullList<ItemStack> stacks = NonNullList.withSize(10, ItemStack.EMPTY);
 	private String customName;
 	private int	timePassed = 0;
 	private int	burningTimeLeft	= 0;
@@ -37,8 +37,13 @@ public class TileEntityComputerCase extends TileEntityLockable implements ITicka
 		NO_BIOS(0, " BIOS element not found"),
 		NO_CPU(1, " CPU element not found"),
 		NO_RAM(2, " RAM element not found"),
-		NO_GRAPHICCARD(3, " Graphic Card element not found"),
-		NO_HARDDISK(4, " Hard Disk element not found");
+		NO_RAM_2(3, " RAM element not found"),
+		NO_GRAPHICCARD(4, " Graphic Card element not found"),
+		NO_GRAPHICCARD_2(5, " Graphic Card element not found"),
+		NO_HARDDISK(6, " Hard Disk element not found"),
+		NO_HARDDISK_2(7, " Hard Disk element not found"),
+		NO_HARDDISK_3(8, " Hard Disk element not found"),
+		;
 		
 		private int id;
 		private String error;
