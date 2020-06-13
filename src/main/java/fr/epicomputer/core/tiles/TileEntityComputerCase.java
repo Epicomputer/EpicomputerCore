@@ -28,7 +28,6 @@ public class TileEntityComputerCase extends TileEntityLockable implements ITicka
 	private int	burningTimeLeft	= 0;
 	
 	public ComputerState state;
-	public String address = "";
 	public Thread computerthread;
 	public TileEntityComputerCase tile;
 	public boolean isNBT;
@@ -122,34 +121,8 @@ public class TileEntityComputerCase extends TileEntityLockable implements ITicka
 		
 	}
 	
-	@Override
-	public void readFromNBT(NBTTagCompound compound) {
-	    super.readFromNBT(compound);
-	    this.stacks = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
-	    ItemStackHelper.loadAllItems(compound, this.stacks);
-	 
-	    if (compound.hasKey("CustomName", 8)) {
-	        this.customName = compound.getString("CustomName");
-	    }
-	    this.burningTimeLeft = compound.getInteger("burningTimeLeft");
-	    this.timePassed = compound.getInteger("timePassed");
-	}
-	 
-	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-	    super.writeToNBT(compound);
-	    ItemStackHelper.saveAllItems(compound, this.stacks);
-	 
-	    if (this.hasCustomName()) {
-	        compound.setString("CustomName", this.customName);
-	    }
-	 
-	    compound.setInteger("burningTimeLeft", this.burningTimeLeft);
-	    compound.setInteger("timePassed", this.timePassed);
-	 
-	    return compound;
-	}
 	
+    
 	@Override
 	public boolean hasCustomName() {
 	    return this.customName != null && !this.customName.isEmpty();
@@ -383,17 +356,6 @@ public class TileEntityComputerCase extends TileEntityLockable implements ITicka
 	    }
 	}
 
-    public static String getAddress(World world, BlockPos pos) {
-    	
-    	if(world.getBlockState(pos).getBlock() instanceof ComputerCase) {
-    		
-    		return ((TileEntityComputerCase) world.getTileEntity(pos)).address;
-    		
-    	}
-    	
-    	return null;
-    	
-    }
     public TileEntityComputerCase() {
     	
     }
@@ -410,40 +372,6 @@ public class TileEntityComputerCase extends TileEntityLockable implements ITicka
 			 NAME = "computer_case";
 		 }
 		 
-		 Random rand = new Random();
-		 
-		 address = rand.nextInt(10000) + "";
-		 System.out.println(address);
-		 
-    }
-    
-    public static void setNBT(World world, BlockPos pos) {
-    	
-    	NBTTagCompound nbtR = new NBTTagCompound();
-    	world.getTileEntity(pos).readFromNBT(nbtR);
-    	
-    	((TileEntityComputerCase) world.getTileEntity(pos)).address = nbtR.getString("Address");
-    	((ComputerCase) world.getBlockState(pos).getBlock()).setState(ComputerState.getFromString(nbtR.getString("State")), world, pos);
-    	((TileEntityComputerCase) world.getTileEntity(pos)).isNBT = nbtR.getBoolean("isNBT");
-    	
-    	System.out.println(((TileEntityComputerCase) world.getTileEntity(pos)).isNBT + "");
-    	
-    	
-    	if(((TileEntityComputerCase) world.getTileEntity(pos)).isNBT == true) System.out.println("LULULULULULULLULULULLULULULULULLULULULULULULULULULL");
-    	
-    	if (world.getTileEntity(pos) instanceof TileEntityComputerCase) {
-    		
-    		((TileEntityComputerCase) world.getTileEntity(pos)).isNBT = true;
-    		
-    		NBTTagCompound nbt = new NBTTagCompound();
-        	
-        	nbt.setString("Address", getAddress(world, pos));
-        	nbt.setString("State", getComputerState(world, pos).getState());
-        	nbt.setBoolean("isNBT",	((TileEntityComputerCase) world.getTileEntity(pos)).isNBT);
-        	
-        	world.getTileEntity(pos).writeToNBT(nbt);
-		}
-    	
     }
     
     public static ComputerState getComputerState(World world, BlockPos pos) {

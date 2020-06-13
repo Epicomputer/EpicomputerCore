@@ -4,7 +4,9 @@ import fr.epicomputer.core.EpicomputerCore;
 import fr.epicomputer.core.gui.GuiWiki;
 import fr.epicomputer.core.init.ItemsCore;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.SoundList;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
@@ -31,7 +33,7 @@ public class TabletOfHelp extends Item {
     	
     	Minecraft.getMinecraft().displayGuiScreen(new GuiWiki());
     	
-    	player.playSound(new SoundEvent(new ResourceLocation("ecore:computer_case_on")), 1.0F, 1.0F);
+    	player.playSound(SoundEvents.ENTITY_PLAYER_LEVELUP, 1.0F, 1.0F);
     	
         return new ActionResult(EnumActionResult.PASS, player.getHeldItem(hand));
     }

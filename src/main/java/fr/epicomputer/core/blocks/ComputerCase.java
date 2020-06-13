@@ -37,6 +37,7 @@ public class ComputerCase extends BlockContainer {
 	public ComputerState state;
 	public TileEntityComputerCase tile;
 	public BlockPos pos;
+	private String address = "";
 	
 	public ComputerCase(Material materialIn, ComputerState state) {
 		 super(materialIn);
@@ -59,6 +60,8 @@ public class ComputerCase extends BlockContainer {
 	        
 		 setHardness(3.0F);
 		 setCreativeTab(EpicomputerCore.tabsCore);
+		 
+		 
 		 
 	}
     
@@ -114,7 +117,7 @@ public class ComputerCase extends BlockContainer {
             InventoryHelper.dropInventoryItems(worldIn, pos,
                     (TileEntityComputerCase) tileentity);
         }
-     
+        
         super.breakBlock(worldIn, pos, state);
     }
     
@@ -128,7 +131,7 @@ public class ComputerCase extends BlockContainer {
         } else {
         	
             TileEntity tileentity = world.getTileEntity(pos);
-     
+      
             if (tileentity instanceof TileEntityComputerCase) {
                 player.openGui(EpicomputerCore.instance, 0, world, pos.getX(),
                         pos.getY(), pos.getZ());
@@ -142,7 +145,9 @@ public class ComputerCase extends BlockContainer {
     @Override
     public TileEntity createNewTileEntity(World world, int metadata)  {
         
-    	tile = new TileEntityComputerCase(this.state);
+    	if (tile == null) {
+    		tile = new TileEntityComputerCase(this.state);
+		}
     	
     	return tile;
     }
