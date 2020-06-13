@@ -37,10 +37,9 @@ public class GuiContenairComputerCase extends GuiContainer{
 	}
 	
 	@Override
-	   public void updateScreen()
-	   {
-	       super.updateScreen();
-	   }
+	public void updateScreen() {
+		super.updateScreen();
+	}
 	
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks)
@@ -74,10 +73,9 @@ public class GuiContenairComputerCase extends GuiContainer{
 	        this.drawTexturedModalRect(i + 37, j + 26 + 12 - textureHeight,
 	                177, 12 - textureHeight, 27, textureHeight);
 	    }
-
-	    this.buttonList.clear();
+		this.buttonList.clear();
 	    
-	    this.buttonList.add(powerButton = new GuiButtonPowerComputer(0, this.width / 2 - 50, j + 30, "Turn on the computer"));
+	    this.buttonList.add(new GuiButtonPowerComputer(0, this.width / 2 - 87, j + 10, "Turn on the computer"));
 
 	    
 	}
@@ -97,8 +95,8 @@ public class GuiContenairComputerCase extends GuiContainer{
 					if(this.tile.getStackInSlot(1).getItem().equals(ItemsCore.BIOS) && 
 							   this.tile.getStackInSlot(2).getItem().equals(ItemsCore.PROCESSOR) &&
 							   this.tile.getStackInSlot(3).getItem().equals(ItemsCore.RAM) &&
-							   this.tile.getStackInSlot(4).getItem().equals(ItemsCore.CARDGRAPHICS) &&
-							   this.tile.getStackInSlot(5).getItem().equals(ItemsCore.HARDDISK) )
+							   this.tile.getStackInSlot(5).getItem().equals(ItemsCore.CARDGRAPHICS) &&
+							   this.tile.getStackInSlot(7).getItem().equals(ItemsCore.HARDDISK) )
 					{
 						
 						if(antiSpamSound == false) {
@@ -144,10 +142,10 @@ public class GuiContenairComputerCase extends GuiContainer{
 								if (this.tile.getStackInSlot(3).getItem() == Items.AIR) {	
 									errorList.add(ComputerErrorType.NO_RAM);
 								}
-								if (this.tile.getStackInSlot(4).getItem() == Items.AIR) {	
+								if (this.tile.getStackInSlot(5).getItem() == Items.AIR) {	
 									errorList.add(ComputerErrorType.NO_GRAPHICCARD);
 								}
-								if (this.tile.getStackInSlot(5).getItem() == Items.AIR) {	
+								if (this.tile.getStackInSlot(7).getItem() == Items.AIR) {	
 									errorList.add(ComputerErrorType.NO_HARDDISK);
 								}
 								start = false;

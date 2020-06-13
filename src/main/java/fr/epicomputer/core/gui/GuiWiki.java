@@ -21,7 +21,7 @@ public class GuiWiki extends GuiScreen{
         int guiY = (height - guiHeight) / 2;
         //this.drawDefaultBackground();
         this.mc.getTextureManager().bindTexture(background);
-        GL11.glColor4f(1, 1, 1, 1);
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.drawTexturedModalRect(guiX,guiY, 0,0, guiWidth, guiHeight);
         
 		

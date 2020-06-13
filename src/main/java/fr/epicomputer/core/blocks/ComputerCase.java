@@ -219,21 +219,17 @@ public class ComputerCase extends BlockContainer {
         if (state == ComputerState.ON)
         {
             worldIn.setBlockState(pos, BlocksCore.COMPUTER_CASE_ON.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
-            worldIn.setBlockState(pos, BlocksCore.COMPUTER_CASE_ON.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
         }
         else if (state == ComputerState.BOOT)
         {
-            worldIn.setBlockState(pos, BlocksCore.COMPUTER_CASE_BOOT.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
             worldIn.setBlockState(pos, BlocksCore.COMPUTER_CASE_BOOT.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
         }
         else if (state == ComputerState.ERROR)
         {
             worldIn.setBlockState(pos, BlocksCore.COMPUTER_CASE_ERROR.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
-            worldIn.setBlockState(pos, BlocksCore.COMPUTER_CASE_ERROR.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
         }
         else
         {
-            worldIn.setBlockState(pos, BlocksCore.COMPUTER_CASE.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
             worldIn.setBlockState(pos, BlocksCore.COMPUTER_CASE.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
         }
 
