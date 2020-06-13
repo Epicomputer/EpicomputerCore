@@ -31,6 +31,7 @@ public class TileEntityComputerCase extends TileEntityLockable implements ITicka
 	public Thread computerthread;
 	public TileEntityComputerCase tile;
 	public boolean isNBT;
+	public boolean valid = false;
 	
 	public enum ComputerErrorType{
 		
@@ -126,7 +127,8 @@ public class TileEntityComputerCase extends TileEntityLockable implements ITicka
 		
 	}
 	
-	
+	public void setValid(boolean bool) { valid = bool; }
+	public boolean getValid() { return valid; }
     
 	@Override
 	public boolean hasCustomName() {
@@ -362,7 +364,7 @@ public class TileEntityComputerCase extends TileEntityLockable implements ITicka
 	}
 
     public TileEntityComputerCase() {
-    	
+    	NAME = "computer_case";
     }
     public TileEntityComputerCase(ComputerState state) {
     	this.state = state;
@@ -372,7 +374,7 @@ public class TileEntityComputerCase extends TileEntityLockable implements ITicka
 		 }else if(state == ComputerState.ON) {
 			 NAME = "computer_case_on";
 		 }else if(state == ComputerState.BOOT) {
-			 NAME = "computer_case_boot";
+			 NAME = "computer_case_boot"; 
 		 }else {
 			 NAME = "computer_case";
 		 }

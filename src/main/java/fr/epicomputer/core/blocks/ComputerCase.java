@@ -38,9 +38,12 @@ public class ComputerCase extends BlockContainer {
 	public TileEntityComputerCase tile;
 	public BlockPos pos;
 	private String address = "";
+	private static boolean validatedTile = false;
 	
 	public ComputerCase(Material materialIn, ComputerState state) {
 		 super(materialIn);
+		 
+		 setAddress();
 		 
 		 if (state == ComputerState.ERROR) {
 				NAME = "computer_case_error";
@@ -61,13 +64,15 @@ public class ComputerCase extends BlockContainer {
 		 setHardness(3.0F);
 		 setCreativeTab(EpicomputerCore.tabsCore);
 		 
-		 
-		 
 	}
     
  
 //////////////////////////////////////////
     
+	public String getAddress() {
+		return this.address;
+	}
+	
     public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
     {
         this.setDefaultFacing(worldIn, pos, state);
@@ -144,12 +149,7 @@ public class ComputerCase extends BlockContainer {
   
     @Override
     public TileEntity createNewTileEntity(World world, int metadata)  {
-        
-    	if (tile == null) {
-    		tile = new TileEntityComputerCase(this.state);
-		}
-    	
-    	return tile;
+    	return new TileEntityComputerCase();
     }
     
     @Override
@@ -224,30 +224,51 @@ public class ComputerCase extends BlockContainer {
         if (state == ComputerState.ON)
         {
             worldIn.setBlockState(pos, BlocksCore.COMPUTER_CASE_ON.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
+            worldIn.setBlockState(pos, BlocksCore.COMPUTER_CASE_ON.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
         }
         else if (state == ComputerState.BOOT)
         {
+            worldIn.setBlockState(pos, BlocksCore.COMPUTER_CASE_BOOT.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
             worldIn.setBlockState(pos, BlocksCore.COMPUTER_CASE_BOOT.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
         }
         else if (state == ComputerState.ERROR)
         {
             worldIn.setBlockState(pos, BlocksCore.COMPUTER_CASE_ERROR.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
+            worldIn.setBlockState(pos, BlocksCore.COMPUTER_CASE_ERROR.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
         }
         else
         {
             worldIn.setBlockState(pos, BlocksCore.COMPUTER_CASE.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
+            worldIn.setBlockState(pos, BlocksCore.COMPUTER_CASE.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
         }
 
-        if (tileentity != null)
-        {
-            tileentity.validate();
-            worldIn.setTileEntity(pos, tileentity);
-        }
+        if (tileentity instanceof TileEntityComputerCase) {
+        	if (tileentity != null && ((TileEntityComputerCase) tileentity).getValid() == false)
+            {
+                tileentity.validate();
+                worldIn.setTileEntity(pos, tileentity);
+                ((TileEntityComputerCase) tileentity).setValid(true);
+            }
+		}
     }
-	
+    
     public EnumBlockRenderType getRenderType(IBlockState state)
     {
         return EnumBlockRenderType.MODEL;
+    }
+    
+    public void setAddress() {
+    	
+    	
+    	if (address == null || address == "") {
+			
+    		Random rand = new Random();
+    		
+    		address = String.valueOf(rand.nextInt(9999));
+    		
+		}
+    	System.out.println(address);
+    	
     }
     
 }

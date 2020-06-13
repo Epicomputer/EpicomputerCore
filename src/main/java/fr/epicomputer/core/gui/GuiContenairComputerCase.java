@@ -49,7 +49,7 @@ public class GuiContenairComputerCase extends GuiContainer{
         this.renderHoveredToolTip(mouseX, mouseY);
     }
 	
-	/*@Override
+	/*@Override 
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
     {
 		//String s = this.tile.getName();
@@ -83,9 +83,7 @@ public class GuiContenairComputerCase extends GuiContainer{
 	public static boolean antiSpamSound = false;
 	@SubscribeEvent
 	protected void actionPerformed(GuiButton button) throws IOException{
-			
-		System.out.println(TileEntityComputerCase.getComputerState(this.tile.getWorld(), this.tile.getPos()));
-		System.out.println(TileEntityComputerCase.getAddress(this.tile.getWorld(), this.tile.getPos()));
+
 			switch(button.id)
 			{
 			case 0:
@@ -102,29 +100,36 @@ public class GuiContenairComputerCase extends GuiContainer{
 						if(antiSpamSound == false) {
 								ComputerCase.setState(ComputerState.BOOT, this.tile.getWorld(), this.tile.getPos());
 								
-								
-								new Thread("computer-" + TileEntityComputerCase.getAddress(this.tile.getWorld(), this.tile.getPos())) {
+								if (this.tile.getBlockType() instanceof ComputerCase) {
 									
-									@Override
-									public void run() {
+									ComputerCase block = (ComputerCase) this.tile.getBlockType();
+									
+									System.out.println(block.getAddress());
+									
+									new Thread("computer-" + block.getAddress()) {
 										
-										try {
+										@Override
+										public void run() {
 											
-											this.sleep(1500L);
+											try {
+												
+												this.sleep(1500L);
+												
+												joueur.playSound(new SoundEvent(new ResourceLocation("ecore:computer_startup")), 1.0F, 1.0F);
+												antiSpamSound = true;
+												ComputerCase.setState(ComputerState.ON, tile.getWorld(), tile.getPos());
+												//TileEntityComputerCase.setNBT(tile.getWorld(), tile.getPos());
+												onEveryday();
+											} catch (InterruptedException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}
 											
-											joueur.playSound(new SoundEvent(new ResourceLocation("ecore:computer_startup")), 1.0F, 1.0F);
-											antiSpamSound = true;
-											ComputerCase.setState(ComputerState.ON, tile.getWorld(), tile.getPos());
-											//TileEntityComputerCase.setNBT(tile.getWorld(), tile.getPos());
-											onEveryday();
-										} catch (InterruptedException e) {
-											// TODO Auto-generated catch block
-											e.printStackTrace();
 										}
 										
-									}
-									
-								}.start();
+									}.start();
+								}
+								
 								}
 								
 									
@@ -176,6 +181,8 @@ public class GuiContenairComputerCase extends GuiContainer{
 					
 					if (TileEntityComputerCase.getComputerthread(this.tile.getWorld(), this.tile.getPos()) != null) {
 						TileEntityComputerCase.getComputerthread(this.tile.getWorld(), this.tile.getPos()).stop();
+						ComputerCase.setState(ComputerState.OFF, this.tile.getWorld(), this.tile.getPos());
+						antiSpamSound = false;
 					}
 				}
 				
