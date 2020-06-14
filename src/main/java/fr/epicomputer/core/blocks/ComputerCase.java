@@ -1,5 +1,6 @@
 package fr.epicomputer.core.blocks;
 
+import java.util.List;
 import java.util.Random;
 
 import fr.epicomputer.core.EpicomputerCore;
@@ -15,10 +16,8 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
@@ -27,7 +26,8 @@ import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.storage.loot.functions.SetMetadata;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 
 public class ComputerCase extends BlockContainer {
@@ -36,14 +36,12 @@ public class ComputerCase extends BlockContainer {
 	public String NAME;
 	public ComputerState state;
 	public TileEntityComputerCase tile;
+	private static boolean keepInventory;
 	public BlockPos pos;
 	private String address = "";
-	private static boolean validatedTile = false;
 	
 	public ComputerCase(Material materialIn, ComputerState state) {
 		 super(materialIn);
-		 
-		 setAddress();
 		 
 		 if (state == ComputerState.ERROR) {
 				NAME = "computer_case_error";
@@ -69,10 +67,6 @@ public class ComputerCase extends BlockContainer {
  
 //////////////////////////////////////////
     
-	public String getAddress() {
-		return this.address;
-	}
-	
     public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
     {
         this.setDefaultFacing(worldIn, pos, state);
@@ -116,13 +110,15 @@ public class ComputerCase extends BlockContainer {
      
     @Override
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+    	if (!keepInventory)
+        {
         TileEntity tileentity = worldIn.getTileEntity(pos);
      
         if (tileentity instanceof TileEntityComputerCase) {
             InventoryHelper.dropInventoryItems(worldIn, pos,
                     (TileEntityComputerCase) tileentity);
         }
-        
+        }
         super.breakBlock(worldIn, pos, state);
     }
     
@@ -161,8 +157,15 @@ public class ComputerCase extends BlockContainer {
             if (tileentity instanceof TileEntityComputerCase) {
                 ((TileEntityComputerCase) tileentity).setCustomName(stack
                         .getDisplayName());
+                
             }
         }
+    	TileEntity tileentity = worldIn.getTileEntity(pos);
+    	if(((TileEntityComputerCase) tileentity).getAddress() == "")
+    	if (tileentity instanceof TileEntityComputerCase) {
+            ((TileEntityComputerCase) tileentity).setAddress();
+        }
+    	
     }
     
     public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
@@ -220,7 +223,7 @@ public class ComputerCase extends BlockContainer {
     {
         IBlockState iblockstate = worldIn.getBlockState(pos);
         TileEntity tileentity = worldIn.getTileEntity(pos);
-
+        keepInventory = true;
         if (state == ComputerState.ON)
         {
             worldIn.setBlockState(pos, BlocksCore.COMPUTER_CASE_ON.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
@@ -241,34 +244,18 @@ public class ComputerCase extends BlockContainer {
             worldIn.setBlockState(pos, BlocksCore.COMPUTER_CASE.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
             worldIn.setBlockState(pos, BlocksCore.COMPUTER_CASE.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
         }
-
-        if (tileentity instanceof TileEntityComputerCase) {
-        	if (tileentity != null && ((TileEntityComputerCase) tileentity).getValid() == false)
-            {
-                tileentity.validate();
-                worldIn.setTileEntity(pos, tileentity);
-                ((TileEntityComputerCase) tileentity).setValid(true);
-            }
-		}
+        keepInventory = false;
+        if (tileentity != null)
+        {
+            tileentity.validate();
+            worldIn.setTileEntity(pos, tileentity);
+        }
     }
-    
+	
     public EnumBlockRenderType getRenderType(IBlockState state)
     {
         return EnumBlockRenderType.MODEL;
     }
     
-    public void setAddress() {
-    	
-    	
-    	if (address == null || address == "") {
-			
-    		Random rand = new Random();
-    		
-    		address = String.valueOf(rand.nextInt(9999));
-    		
-		}
-    	System.out.println(address);
-    	
-    }
     
 }

@@ -21,11 +21,18 @@ public class GuiWiki extends GuiScreen{
         int guiY = (height - guiHeight) / 2;
         //this.drawDefaultBackground();
         this.mc.getTextureManager().bindTexture(background);
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+        this.drawTexturedModalRect(guiX,guiY, 0,0, guiWidth, guiHeight);
         
 		
         super.drawScreen(x, y, ticks);
     }
+	
+	@Override
+	public void updateScreen() {
+		super.updateScreen();
+	}
+	
 
 	@Override
 	public boolean doesGuiPauseGame()

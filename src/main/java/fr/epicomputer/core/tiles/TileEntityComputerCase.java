@@ -26,12 +26,12 @@ public class TileEntityComputerCase extends TileEntityLockable implements ITicka
 	private String customName;
 	private int	timePassed = 0;
 	private int	burningTimeLeft	= 0;
+	private String address = "";
 	
 	public ComputerState state;
 	public Thread computerthread;
 	public TileEntityComputerCase tile;
 	public boolean isNBT;
-	public boolean valid = false;
 	
 	public enum ComputerErrorType{
 		
@@ -127,8 +127,27 @@ public class TileEntityComputerCase extends TileEntityLockable implements ITicka
 		
 	}
 	
-	public void setValid(boolean bool) { valid = bool; }
-	public boolean getValid() { return valid; }
+	@Override
+	public void readFromNBT(NBTTagCompound compound) {
+	    super.readFromNBT(compound);
+	    this.stacks = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
+	    ItemStackHelper.loadAllItems(compound, this.stacks);
+	    if (compound.hasKey("CustomName", 8)) {
+	        this.customName = compound.getString("CustomName");
+	    }
+	    this.address = compound.getString("");
+	}
+	 
+	@Override
+	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+	    super.writeToNBT(compound);
+	    ItemStackHelper.saveAllItems(compound, this.stacks);
+	    if (this.hasCustomName()) {
+	        compound.setString("CustomName", this.customName);
+	    }
+	    compound.setString("", this.address);
+	    return compound;
+	}
     
 	@Override
 	public boolean hasCustomName() {
@@ -139,6 +158,24 @@ public class TileEntityComputerCase extends TileEntityLockable implements ITicka
 	public String getName() {
 	    return hasCustomName() ? this.customName : "tile.computer_case";
 	}
+	
+	public String getAddress() {
+		return this.address;
+	}
+	
+	public void setAddress() {
+
+
+        if (address == null || address == "") {
+
+            Random rand = new Random();
+
+            address = String.valueOf(rand.nextInt(9999));
+
+        }
+        System.out.println(getAddress());
+
+    }
 	 
 	public void setCustomName(String name) {
 	    this.customName = name;
@@ -364,7 +401,7 @@ public class TileEntityComputerCase extends TileEntityLockable implements ITicka
 	}
 
     public TileEntityComputerCase() {
-    	NAME = "computer_case";
+    	
     }
     public TileEntityComputerCase(ComputerState state) {
     	this.state = state;
@@ -374,7 +411,7 @@ public class TileEntityComputerCase extends TileEntityLockable implements ITicka
 		 }else if(state == ComputerState.ON) {
 			 NAME = "computer_case_on";
 		 }else if(state == ComputerState.BOOT) {
-			 NAME = "computer_case_boot"; 
+			 NAME = "computer_case_boot";
 		 }else {
 			 NAME = "computer_case";
 		 }

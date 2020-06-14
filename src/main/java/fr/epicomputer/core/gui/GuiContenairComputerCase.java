@@ -35,12 +35,6 @@ public class GuiContenairComputerCase extends GuiContainer{
         super(new ComputerCaseContainer(tile, playerInv));
         this.tile = tile;
 	}
-	
-	@Override
-	public void updateScreen() {
-		super.updateScreen();
-	}
-	
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
@@ -49,12 +43,12 @@ public class GuiContenairComputerCase extends GuiContainer{
         this.renderHoveredToolTip(mouseX, mouseY);
     }
 	
-	/*@Override 
+	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
     {
-		//String s = this.tile.getName();
-        //this.fontRenderer.drawString(this.tile.getName(), this.xSize / 2 - this.fontRenderer.getStringWidth(s) / 2, 6, 0xFFFFFF);
-	}*/
+		String s = this.tile.getAddress();
+        this.fontRenderer.drawString("Address : " + this.tile.getAddress(), this.xSize / 2 - this.fontRenderer.getStringWidth(s) / 2, 6, 0xFFFFFF);
+	}
 	
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
@@ -83,7 +77,9 @@ public class GuiContenairComputerCase extends GuiContainer{
 	public static boolean antiSpamSound = false;
 	@SubscribeEvent
 	protected void actionPerformed(GuiButton button) throws IOException{
-
+			
+		System.out.println(TileEntityComputerCase.getComputerState(this.tile.getWorld(), this.tile.getPos()));
+		//System.out.println(TileEntityComputerCase.getAddress(this.tile.getWorld(), this.tile.getPos()));
 			switch(button.id)
 			{
 			case 0:
@@ -100,36 +96,29 @@ public class GuiContenairComputerCase extends GuiContainer{
 						if(antiSpamSound == false) {
 								ComputerCase.setState(ComputerState.BOOT, this.tile.getWorld(), this.tile.getPos());
 								
-								if (this.tile.getBlockType() instanceof ComputerCase) {
+								
+								new Thread("computer-" /*+ TileEntityComputerCase.getAddress(this.tile.getWorld(), this.tile.getPos())*/) {
 									
-									ComputerCase block = (ComputerCase) this.tile.getBlockType();
-									
-									System.out.println(block.getAddress());
-									
-									new Thread("computer-" + block.getAddress()) {
+									@Override
+									public void run() {
 										
-										@Override
-										public void run() {
+										try {
 											
-											try {
-												
-												this.sleep(1500L);
-												
-												joueur.playSound(new SoundEvent(new ResourceLocation("ecore:computer_startup")), 1.0F, 1.0F);
-												antiSpamSound = true;
-												ComputerCase.setState(ComputerState.ON, tile.getWorld(), tile.getPos());
-												//TileEntityComputerCase.setNBT(tile.getWorld(), tile.getPos());
-												onEveryday();
-											} catch (InterruptedException e) {
-												// TODO Auto-generated catch block
-												e.printStackTrace();
-											}
+											this.sleep(1500L);
 											
+											joueur.playSound(new SoundEvent(new ResourceLocation("ecore:computer_startup")), 1.0F, 1.0F);
+											antiSpamSound = true;
+											ComputerCase.setState(ComputerState.ON, tile.getWorld(), tile.getPos());
+											//TileEntityComputerCase.setNBT(tile.getWorld(), tile.getPos());
+											onEveryday();
+										} catch (InterruptedException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
 										}
 										
-									}.start();
-								}
-								
+									}
+									
+								}.start();
 								}
 								
 									
@@ -181,8 +170,6 @@ public class GuiContenairComputerCase extends GuiContainer{
 					
 					if (TileEntityComputerCase.getComputerthread(this.tile.getWorld(), this.tile.getPos()) != null) {
 						TileEntityComputerCase.getComputerthread(this.tile.getWorld(), this.tile.getPos()).stop();
-						ComputerCase.setState(ComputerState.OFF, this.tile.getWorld(), this.tile.getPos());
-						antiSpamSound = false;
 					}
 				}
 				
