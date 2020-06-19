@@ -78,14 +78,13 @@ public class GuiContenairComputerCase extends GuiContainer{
 	@SubscribeEvent
 	protected void actionPerformed(GuiButton button) throws IOException{
 			
-		System.out.println(TileEntityComputerCase.getComputerState(this.tile.getWorld(), this.tile.getPos()));
-		//System.out.println(TileEntityComputerCase.getAddress(this.tile.getWorld(), this.tile.getPos()));
+		System.out.println(this.tile.getAddress());
 			switch(button.id)
 			{
 			case 0:
 				
 				EntityPlayer joueur = Minecraft.getMinecraft().player;
-				if (TileEntityComputerCase.getComputerState(this.tile.getWorld(), this.tile.getPos()) != ComputerState.ON) {
+				if (this.tile.getComputerState() != ComputerState.ON) {
 					if(this.tile.getStackInSlot(1).getItem().equals(ItemsCore.BIOS) && 
 							   this.tile.getStackInSlot(2).getItem().equals(ItemsCore.PROCESSOR) &&
 							   this.tile.getStackInSlot(3).getItem().equals(ItemsCore.RAM) &&
@@ -97,7 +96,7 @@ public class GuiContenairComputerCase extends GuiContainer{
 								ComputerCase.setState(ComputerState.BOOT, this.tile.getWorld(), this.tile.getPos());
 								
 								
-								new Thread("computer-" /*+ TileEntityComputerCase.getAddress(this.tile.getWorld(), this.tile.getPos())*/) {
+								new Thread("computer-" + this.tile.getAddress()) {
 									
 									@Override
 									public void run() {
@@ -160,6 +159,8 @@ public class GuiContenairComputerCase extends GuiContainer{
 									
 									ComputerCase.setState(ComputerState.ERROR, this.tile.getWorld(), this.tile.getPos());
 									
+									System.out.println("ERROR");
+									
 									errors.clear();
 									errorList.clear();
 									
@@ -168,8 +169,8 @@ public class GuiContenairComputerCase extends GuiContainer{
 							}
 				}else{
 					
-					if (TileEntityComputerCase.getComputerthread(this.tile.getWorld(), this.tile.getPos()) != null) {
-						TileEntityComputerCase.getComputerthread(this.tile.getWorld(), this.tile.getPos()).stop();
+					if (this.tile.getComputerthread() != null) {
+						this.tile.getComputerthread().stop();
 					}
 				}
 				

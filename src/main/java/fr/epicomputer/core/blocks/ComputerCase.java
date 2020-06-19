@@ -38,7 +38,6 @@ public class ComputerCase extends BlockContainer {
 	public TileEntityComputerCase tile;
 	private static boolean keepInventory;
 	public BlockPos pos;
-	private String address = "";
 	
 	public ComputerCase(Material materialIn, ComputerState state) {
 		 super(materialIn);
@@ -136,7 +135,7 @@ public class ComputerCase extends BlockContainer {
             if (tileentity instanceof TileEntityComputerCase) {
                 player.openGui(EpicomputerCore.instance, 0, world, pos.getX(),
                         pos.getY(), pos.getZ());
-                
+                ((TileEntityComputerCase)tileentity).state = ((TileEntityComputerCase) world.getTileEntity(pos)).state;
             }
      
             return true;
@@ -145,7 +144,7 @@ public class ComputerCase extends BlockContainer {
   
     @Override
     public TileEntity createNewTileEntity(World world, int metadata)  {
-    	return new TileEntityComputerCase();
+     	return new TileEntityComputerCase();    		
     }
     
     @Override
@@ -159,11 +158,6 @@ public class ComputerCase extends BlockContainer {
                         .getDisplayName());
                 
             }
-        }
-    	TileEntity tileentity = worldIn.getTileEntity(pos);
-    	if(((TileEntityComputerCase) tileentity).getAddress() == "")
-    	if (tileentity instanceof TileEntityComputerCase) {
-            ((TileEntityComputerCase) tileentity).setAddress();
         }
     	
     }
@@ -224,38 +218,44 @@ public class ComputerCase extends BlockContainer {
         IBlockState iblockstate = worldIn.getBlockState(pos);
         TileEntity tileentity = worldIn.getTileEntity(pos);
         keepInventory = true;
-        if (state == ComputerState.ON)
-        {
-            worldIn.setBlockState(pos, BlocksCore.COMPUTER_CASE_ON.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
-            worldIn.setBlockState(pos, BlocksCore.COMPUTER_CASE_ON.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
-        }
-        else if (state == ComputerState.BOOT)
-        {
-            worldIn.setBlockState(pos, BlocksCore.COMPUTER_CASE_BOOT.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
-            worldIn.setBlockState(pos, BlocksCore.COMPUTER_CASE_BOOT.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
-        }
-        else if (state == ComputerState.ERROR)
-        {
-            worldIn.setBlockState(pos, BlocksCore.COMPUTER_CASE_ERROR.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
-            worldIn.setBlockState(pos, BlocksCore.COMPUTER_CASE_ERROR.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
-        }
-        else
-        {
-            worldIn.setBlockState(pos, BlocksCore.COMPUTER_CASE.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
-            worldIn.setBlockState(pos, BlocksCore.COMPUTER_CASE.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
-        }
-        keepInventory = false;
-        if (tileentity != null)
-        {
-            tileentity.validate();
-            worldIn.setTileEntity(pos, tileentity);
-        }
+        if (tileentity instanceof TileEntityComputerCase) {
+			TileEntityComputerCase te = (TileEntityComputerCase) tileentity;
+			
+			te.state = state;
+			
+        	if (te.state == ComputerState.ON)
+            {
+                worldIn.setBlockState(pos, BlocksCore.COMPUTER_CASE_ON.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
+                worldIn.setBlockState(pos, BlocksCore.COMPUTER_CASE_ON.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
+            }
+            else if (te.state == ComputerState.BOOT)
+            {
+                worldIn.setBlockState(pos, BlocksCore.COMPUTER_CASE_BOOT.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
+                worldIn.setBlockState(pos, BlocksCore.COMPUTER_CASE_BOOT.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
+            }
+            else if (te.state == ComputerState.ERROR)
+            {
+                worldIn.setBlockState(pos, BlocksCore.COMPUTER_CASE_ERROR.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
+                worldIn.setBlockState(pos, BlocksCore.COMPUTER_CASE_ERROR.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
+            }
+            else
+            {
+                worldIn.setBlockState(pos, BlocksCore.COMPUTER_CASE.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
+                worldIn.setBlockState(pos, BlocksCore.COMPUTER_CASE.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
+            }
+            keepInventory = false;
+            if (tileentity != null)
+            {
+                tileentity.validate();
+                worldIn.setTileEntity(pos, tileentity);
+            }
+        	
+		}
     }
 	
     public EnumBlockRenderType getRenderType(IBlockState state)
     {
         return EnumBlockRenderType.MODEL;
     }
-    
     
 }

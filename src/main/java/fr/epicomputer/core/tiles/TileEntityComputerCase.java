@@ -31,7 +31,8 @@ public class TileEntityComputerCase extends TileEntityLockable implements ITicka
 	public ComputerState state;
 	public Thread computerthread;
 	public TileEntityComputerCase tile;
-	public boolean isNBT;
+	public String tileType = "";
+	public static String lastAddress = "";
 	
 	public enum ComputerErrorType{
 		
@@ -126,28 +127,6 @@ public class TileEntityComputerCase extends TileEntityLockable implements ITicka
 		}
 		
 	}
-	
-	@Override
-	public void readFromNBT(NBTTagCompound compound) {
-	    super.readFromNBT(compound);
-	    this.stacks = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
-	    ItemStackHelper.loadAllItems(compound, this.stacks);
-	    if (compound.hasKey("CustomName", 8)) {
-	        this.customName = compound.getString("CustomName");
-	    }
-	    this.address = compound.getString("");
-	}
-	 
-	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-	    super.writeToNBT(compound);
-	    ItemStackHelper.saveAllItems(compound, this.stacks);
-	    if (this.hasCustomName()) {
-	        compound.setString("CustomName", this.customName);
-	    }
-	    compound.setString("", this.address);
-	    return compound;
-	}
     
 	@Override
 	public boolean hasCustomName() {
@@ -158,24 +137,6 @@ public class TileEntityComputerCase extends TileEntityLockable implements ITicka
 	public String getName() {
 	    return hasCustomName() ? this.customName : "tile.computer_case";
 	}
-	
-	public String getAddress() {
-		return this.address;
-	}
-	
-	public void setAddress() {
-
-
-        if (address == null || address == "") {
-
-            Random rand = new Random();
-
-            address = String.valueOf(rand.nextInt(9999));
-
-        }
-        System.out.println(getAddress());
-
-    }
 	 
 	public void setCustomName(String name) {
 	    this.customName = name;
@@ -401,9 +362,12 @@ public class TileEntityComputerCase extends TileEntityLockable implements ITicka
 	}
 
     public TileEntityComputerCase() {
-    	
+    	tileType = "normal";
+;    	readFromNBT(null);
     }
+    
     public TileEntityComputerCase(ComputerState state) {
+    	tileType = "stated";
     	this.state = state;
 		 
 		 if (state == ComputerState.ERROR) {
@@ -416,24 +380,71 @@ public class TileEntityComputerCase extends TileEntityLockable implements ITicka
 			 NAME = "computer_case";
 		 }
 		 
+		 readFromNBT(null);
     }
     
-    public static ComputerState getComputerState(World world, BlockPos pos) {
+    public ComputerState getComputerState() {
 		
-		if (world.getBlockState(pos).getBlock() instanceof ComputerCase) {
-			return ((TileEntityComputerCase) world.getTileEntity(pos)).state;
-		}
-		
-		return null;
+		return this.state;
 		
 	}
     
-    public static Thread getComputerthread(World world, BlockPos pos) {
-		return ((TileEntityComputerCase) world.getTileEntity(pos)).computerthread;
+    public Thread getComputerthread() {
+		return this.computerthread;
 	}
 
-	public static void setComputerthread(Thread computerthread, World world, BlockPos pos) {
-		((TileEntityComputerCase) world.getTileEntity(pos)).computerthread = computerthread;
+	public void setComputerthread(Thread computerthread) {
+		this.computerthread = computerthread;
 	}
-
+	
+	public void setAddress() { 
+		if (this.address == null || this.address == "") {
+			
+			Random rand = new Random();
+			
+			int integer = rand.nextInt(999999999);
+			
+			this.address = String.valueOf(integer);
+			
+			this.markDirty(); 
+		}
+	}
+	
+	public String getAddress() { 
+		return this.address; 
+	}
+	
+	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+		if (nbt == null) nbt = new NBTTagCompound();
+		
+		if (address != null && address != "") {
+			nbt.setString("address", this.address);
+			System.out.println("Save de l'addres: " + this.address);
+		}
+	    ItemStackHelper.saveAllItems(nbt, this.stacks);
+	    if (this.hasCustomName()) {
+	        nbt.setString("CustomName", this.customName);
+	    }
+		return super.writeToNBT(nbt);
+	}
+	
+	public void readFromNBT(NBTTagCompound nbt) {
+		if (nbt == null) nbt = new NBTTagCompound();
+		
+	    this.stacks = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
+	    ItemStackHelper.loadAllItems(nbt, this.stacks);
+	    if (nbt.getString("address") != null && nbt.getString("address") != "") {
+	    	this.address = nbt.getString("address");
+			System.out.println("Chargement de l'address: " + nbt.getString("address"));
+			System.out.println(tileType);
+			lastAddress = this.address;
+		}else{
+			setAddress();
+		}
+	    if (nbt.hasKey("CustomName", 8)) {
+	       this.customName = nbt.getString("CustomName");
+	    }
+		super.readFromNBT(nbt);
+	}
+	
 }
