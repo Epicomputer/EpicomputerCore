@@ -1,15 +1,19 @@
 package fr.epicomputer.core.init;
 
 import fr.epicomputer.core.EpicomputerCore;
+import fr.epicomputer.core.blocks.ComputerCase;
+import fr.epicomputer.core.itemblock.ItemBlockComputerCase;
 import fr.epicomputer.core.items.Bios;
 import fr.epicomputer.core.items.CardGraphics;
 import fr.epicomputer.core.items.HardDisk;
 import fr.epicomputer.core.items.Processor;
 import fr.epicomputer.core.items.Ram;
 import fr.epicomputer.core.items.TabletOfHelp;
+import fr.epicomputer.core.tiles.TileEntityComputerCase;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -29,7 +33,7 @@ public class ItemsCore
     public static final Item TABLETOFHELP = new TabletOfHelp();
     
     //block item
-    public static final Item COMPUTER_CASE = new ItemBlock(BlocksCore.COMPUTER_CASE).setRegistryName(BlocksCore.COMPUTER_CASE.getRegistryName());
+    public static final Item COMPUTER_CASE = new ItemBlockComputerCase(BlocksCore.COMPUTER_CASE);
     //public static final Item COMPUTER_CASE_BOOT = new ItemBlock(BlocksCore.COMPUTER_CASE_BOOT).setRegistryName(BlocksCore.COMPUTER_CASE_BOOT.getRegistryName());
     //public static final Item COMPUTER_CASE_ERROR = new ItemBlock(BlocksCore.COMPUTER_CASE_ERROR).setRegistryName(BlocksCore.COMPUTER_CASE_ERROR.getRegistryName());
     //public static final Item COMPUTER_CASE_ON = new ItemBlock(BlocksCore.COMPUTER_CASE_ON).setRegistryName(BlocksCore.COMPUTER_CASE_ON.getRegistryName());

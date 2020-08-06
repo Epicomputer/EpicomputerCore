@@ -35,7 +35,7 @@ public class ComputerCase extends BlockContainer {
 	public static final PropertyDirection FACING = BlockHorizontal.FACING;
 	public String NAME;
 	public ComputerState state;
-	public TileEntityComputerCase tile;
+	//public TileEntityComputerCase tile;
 	private static boolean keepInventory;
 	public BlockPos pos;
 	

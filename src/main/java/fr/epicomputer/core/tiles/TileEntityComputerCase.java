@@ -26,7 +26,7 @@ public class TileEntityComputerCase extends TileEntityLockable implements ITicka
 	private String customName;
 	private int	timePassed = 0;
 	private int	burningTimeLeft	= 0;
-	private String address = "";
+	public String address = "";
 	
 	public ComputerState state;
 	public Thread computerthread;
