@@ -1,0 +1,11 @@
+{
+    "variants": {
+        "normal": [
+            { "model": "epicomputer:computer_case_on" }
+        ],
+        "facing=north": { "model": "epicomputer:computer_case_on" },
+        "facing=south": { "model": "epicomputer:computer_case_on", "y": 180 },
+        "facing=west":  { "model": "epicomputer:computer_case_on", "y": 270 },
+        "facing=east":  { "model": "epicomputer:computer_case_on", "y": 90 }
+    }
+}

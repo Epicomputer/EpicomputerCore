@@ -1,0 +1,11 @@
+{
+	"variants": {
+    	"normal": [
+            { "model": "epicomputer:small_speaker" }
+        ],
+        "facing=north": { "model": "epicomputer:small_speaker" },
+        "facing=south": { "model": "epicomputer:small_speaker", "y": 180 },
+        "facing=west":  { "model": "epicomputer:small_speaker", "y": 270 },
+        "facing=east":  { "model": "epicomputer:small_speaker", "y": 90 }
+    }
+}

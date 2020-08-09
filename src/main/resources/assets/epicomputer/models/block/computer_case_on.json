@@ -1,0 +1,9 @@
+{
+    "parent": "block/orientable",
+    "textures": {
+        "top": "epicomputer:blocks/computer_case_side",
+        "front": "epicomputer:blocks/computer_case_front_on",
+        "side": "epicomputer:blocks/computer_case_side",
+        "south": "epicomputer:blocks/computer_case_back"
+    }
+}

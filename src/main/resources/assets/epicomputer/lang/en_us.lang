@@ -1,0 +1,11 @@
+itemGroup.tabEpicomputer=Epicomputer
+
+item.epicomputer.bios.name=Bios
+item.epicomputer.ram.name=Ram
+item.epicomputer.processor.name=Processor
+item.epicomputer.graphic_card.name=Graphic Card
+item.epicomputer.hard_disk.name=Hard Disk
+item.epicomputer.tablet_of_help.name=Tablet Of Help
+
+tile.epicomputer.computer_case.name=Computer Case
+tile.computer_case=Computer
