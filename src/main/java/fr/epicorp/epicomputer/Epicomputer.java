@@ -6,6 +6,7 @@ import fr.epicorp.epicomputer.gen.WorldGen;
 import fr.epicorp.epicomputer.handler.GuiHandler;
 import fr.epicorp.epicomputer.handler.RegisteringHandler;
 import fr.epicorp.epicomputer.init.ItemsMod;
+import fr.epicorp.epicomputer.init.RecipesMod;
 import fr.epicorp.epicomputer.proxy.ClientProxy;
 import fr.epicorp.epicomputer.proxy.CommonProxy;
 import fr.epicorp.epicomputer.tileentity.TileEntityComputerCase;
@@ -68,6 +69,7 @@ public class Epicomputer {
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		proxy.init();
+		RecipesMod.init();
 	}
 	
 	@EventHandler

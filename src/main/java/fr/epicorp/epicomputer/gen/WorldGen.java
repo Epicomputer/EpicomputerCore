@@ -31,7 +31,8 @@ public class WorldGen implements IWorldGenerator{
 	}
 
 	    private void generateSurface(World world, Random random, int x, int z) {
-
+	    	
+	    	//this.addOreSpawn('BlocÀGénérer', 'MétadataDuBloc', 'BlocÀRemplacer', world, random, x, z, 16, 16, 'TailleMaximaleDUnFilon', 'Rareté', 'PositionYMinimum', 'PositionYMaximum'); 
 	    	this.addOreSpawn(BlocksMod.SILICIUM_ORE, BlocksMod.SILICIUM_ORE.getDefaultState(), Blocks.STONE, world, random, x, z, 16, 16, 5, 8, 20, 60); 
 	    	
 	    }	
