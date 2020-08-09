@@ -1,8 +1,11 @@
 package fr.epicorp.epicomputer.init;
 
 import fr.epicorp.epicomputer.Epicomputer;
+import fr.epicorp.epicomputer.blocks.BlockSiliciumOre;
 import fr.epicorp.epicomputer.itemblocks.ItemBlockComputerCase;
+import fr.epicorp.epicomputer.itemblocks.ItemBlockSiliciumOre;
 import fr.epicorp.epicomputer.items.ItemEpicomputer;
+import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -16,7 +19,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemBlocksMod {
 	
 	public static final Item computer_case = new ItemBlockComputerCase();
-
+	public static final Item SILICIUM_ORE = new ItemBlockSiliciumOre();
+	
 	public static void setItemName(Item item, String name) {
 		item.setRegistryName(Epicomputer.MODID, name).setUnlocalizedName(Epicomputer.MODID + "." + name);
 	}
@@ -26,6 +30,7 @@ public class ItemBlocksMod {
 	@SubscribeEvent
 	public static void registerItemModels(ModelRegistryEvent event) {
 		registerModel(computer_case, 0);
+		registerModel(SILICIUM_ORE, 0);
 	}
 
 	@SideOnly(Side.CLIENT)

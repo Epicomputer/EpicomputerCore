@@ -1,0 +1,11 @@
+{
+
+    "parent": "block/cube_all",
+
+    "textures": {
+
+        "all": "epicomputer:blocks/silicium_ore"
+
+    }
+
+}

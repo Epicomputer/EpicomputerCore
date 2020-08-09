@@ -32,6 +32,7 @@ import net.minecraft.util.Mirror;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
@@ -42,14 +43,18 @@ public class BlockComputerCase extends BlockContainer {
 	
 	public static final String NAME = "computer_case";
 	TileEntity tileentity = null;
+	public static final PropertyDirection FACING = BlockHorizontal.FACING;
+	
+	
 	public BlockComputerCase() {
 		super(Material.IRON);
 		
 		BlocksMod.setBlockName(this, NAME);
+		this.setDefaultState(this.blockState.getBaseState().withProperty(BlockHorizontal.FACING,EnumFacing.NORTH));
 	    setResistance(5.0F);
 	    setHardness(3.0F);
 	    setCreativeTab(Epicomputer.tabEpicomputer);
-		
+	    
 	}
 
 	@Override
@@ -128,6 +133,9 @@ public class BlockComputerCase extends BlockContainer {
 		
 		TileEntityComputerCase te = ((TileEntityComputerCase)tileentity);
 		
+		EnumFacing enumFacing = EnumFacing.getHorizontal(MathHelper.floor((double)(placer.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3).getOpposite();
+		state = state.withProperty(FACING, enumFacing);
+		
 		if (stack.hasDisplayName()) {
 	 
 	        if (tileentity instanceof TileEntityComputerCase) {
@@ -164,6 +172,21 @@ public class BlockComputerCase extends BlockContainer {
     }
 	
 	@Override
+	protected BlockStateContainer createBlockState() {
+		return new BlockStateContainer(this, new IProperty[] {BlockHorizontal.FACING});
+	}
+
+	@Override
+	public IBlockState getStateFromMeta(int meta) {
+		return this.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.getHorizontal(meta));
+	}
+
+	@Override
+	public int getMetaFromState(IBlockState state) {
+		return state.getValue(BlockHorizontal.FACING).getHorizontalIndex()&1;
+	}
+	
+	@Override
 	@SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, ITooltipFlag advanced)
     {
@@ -178,5 +201,11 @@ public class BlockComputerCase extends BlockContainer {
 
         }
     }
+	
+	 public boolean rotateBlock(World world, BlockPos pos, EnumFacing axis)
+	    {
+	        return super.rotateBlock(world, pos, axis);
+	    }
+	
 }
 

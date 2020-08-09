@@ -12,22 +12,24 @@ public class RegisteringHandler {
 	@SubscribeEvent
 	public void registerItems(RegistryEvent.Register<Item> event) {
 		event.getRegistry().registerAll(
-				ItemsMod.bios,
-				ItemsMod.processor, 
-				ItemsMod.ram, 
-				ItemsMod.graphic_card,
-				ItemsMod.hard_disk
+				ItemsMod.BIOS,
+				ItemsMod.PROCESSOR, 
+				ItemsMod.RAM, 
+				ItemsMod.GRAPHIC_CARD,
+				ItemsMod.HARD_DISK
 				);
 		/******************** ITEMBLOCKS ********************/
 		event.getRegistry().registerAll(
-				ItemBlocksMod.computer_case
+				ItemBlocksMod.computer_case,
+				ItemBlocksMod.SILICIUM_ORE
 				);
 	}
 
 	@SubscribeEvent
 	public void registerBlocks(RegistryEvent.Register<Block> event) {
 		event.getRegistry().registerAll(
-				BlocksMod.computer_case
+				BlocksMod.computer_case,
+				BlocksMod.SILICIUM_ORE
 				);
 	}
 

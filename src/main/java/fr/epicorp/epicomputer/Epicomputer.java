@@ -2,6 +2,7 @@ package fr.epicorp.epicomputer;
 
 import org.apache.logging.log4j.Logger;
 
+import fr.epicorp.epicomputer.gen.WorldGen;
 import fr.epicorp.epicomputer.handler.GuiHandler;
 import fr.epicorp.epicomputer.handler.RegisteringHandler;
 import fr.epicorp.epicomputer.init.ItemsMod;
@@ -10,6 +11,7 @@ import fr.epicorp.epicomputer.proxy.CommonProxy;
 import fr.epicorp.epicomputer.tileentity.TileEntityComputerCase;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -31,6 +33,8 @@ public class Epicomputer {
 	public static final String NAME = "Epicomputer";
 	public static final String VERSION = "0.0.1";
 	
+	WorldGen worldgeneration = new WorldGen(); 
+	
 	@Instance(Epicomputer.MODID)
 	public static Epicomputer instance;
 	
@@ -48,7 +52,7 @@ public class Epicomputer {
         @SideOnly(Side.CLIENT)
         public ItemStack getTabIconItem()
         {
-            return new ItemStack(ItemsMod.bios);
+            return new ItemStack(ItemsMod.BIOS);
         }
     };
 	
@@ -58,6 +62,7 @@ public class Epicomputer {
 		proxy.preInit(event.getSuggestedConfigurationFile());
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
         GameRegistry.registerTileEntity(TileEntityComputerCase.class, Epicomputer.MODID +":tile_computer_case");
+        GameRegistry.registerWorldGenerator(worldgeneration, 0); 
 	}
 	
 	@EventHandler

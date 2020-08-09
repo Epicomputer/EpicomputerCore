@@ -1,14 +1,11 @@
 package fr.epicorp.epicomputer.tileentity;
 
-import java.util.Random;
 import java.util.UUID;
 
 import fr.epicorp.epicomputer.Epicomputer;
-import fr.epicorp.epicomputer.container.ContainerComputerCase;
 import fr.epicorp.epicomputer.init.ItemsMod;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
@@ -16,7 +13,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityLockable;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
-import net.minecraftforge.oredict.OreDictionary;
 
 public class TileEntityComputerCase extends TileEntityLockable implements ITickable {
 
@@ -57,7 +53,6 @@ public class TileEntityComputerCase extends TileEntityLockable implements ITicka
 	public void setRandomAddress() {
 		if(!hasAddress()) {
 		String address = UUID.randomUUID().toString();
-		System.out.println(address);
 	    this.address = address;
 		}
 	}
@@ -135,27 +130,26 @@ public class TileEntityComputerCase extends TileEntityLockable implements ITicka
 	
 	@Override
 	public boolean isItemValidForSlot(int index, ItemStack stack) {
-	    // Le slot 3 je n'autorise que les planches de bois
 	    
 		switch(index) {
 			case 0:
-				return stack.getItem() == ItemsMod.bios;
+				return stack.getItem() == ItemsMod.BIOS;
 			case 1:
-				return stack.getItem() == ItemsMod.processor;
+				return stack.getItem() == ItemsMod.PROCESSOR;
 			case 2:
-				return stack.getItem() == ItemsMod.ram;
+				return stack.getItem() == ItemsMod.RAM;
 			case 3:
-				return stack.getItem() == ItemsMod.ram;
+				return stack.getItem() == ItemsMod.RAM;
 			case 4:
-				return stack.getItem() == ItemsMod.graphic_card;
+				return stack.getItem() == ItemsMod.GRAPHIC_CARD;
 			case 5:
-				return stack.getItem() == ItemsMod.graphic_card;
+				return stack.getItem() == ItemsMod.GRAPHIC_CARD;
 			case 6:
-				return stack.getItem() == ItemsMod.hard_disk;
+				return stack.getItem() == ItemsMod.HARD_DISK;
 			case 7:
-				return stack.getItem() == ItemsMod.hard_disk;
+				return stack.getItem() == ItemsMod.HARD_DISK;
 			case 8:
-				return stack.getItem() == ItemsMod.hard_disk;
+				return stack.getItem() == ItemsMod.HARD_DISK;
 		}
 		return false;
 	}
@@ -198,7 +192,7 @@ public class TileEntityComputerCase extends TileEntityLockable implements ITicka
 	 
 	    
 	    if(this.hasAddress()) {
-	    compound.setString("address", this.address);
+	    	compound.setString("address", this.address);
 	    }
         return compound;
     }
@@ -214,6 +208,7 @@ public class TileEntityComputerCase extends TileEntityLockable implements ITicka
 	    
 	    if(compound.hasKey("address")) {
 	    	this.address = compound.getString("address");
+	    	System.out.println(this.address);
 	    }
     }
 
