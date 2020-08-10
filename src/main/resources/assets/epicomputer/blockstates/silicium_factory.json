@@ -1,0 +1,11 @@
+{
+    "variants": {
+        "normal": [
+            { "model": "epicomputer:silicium_factory" }
+        ],
+        "facing=north": { "model": "epicomputer:silicium_factory" },
+        "facing=south": { "model": "epicomputer:silicium_factory", "y": 180 },
+        "facing=west":  { "model": "epicomputer:silicium_factory", "y": 270 },
+        "facing=east":  { "model": "epicomputer:silicium_factory", "y": 90 }
+    }
+}

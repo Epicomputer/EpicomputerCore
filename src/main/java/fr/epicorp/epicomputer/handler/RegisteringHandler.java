@@ -22,7 +22,8 @@ public class RegisteringHandler {
 		/******************** ITEMBLOCKS ********************/
 		event.getRegistry().registerAll(
 				ItemBlocksMod.computer_case,
-				ItemBlocksMod.SILICIUM_ORE
+				ItemBlocksMod.SILICIUM_ORE,
+				ItemBlocksMod.SILICIUM_FACTORY
 				);
 	}
 
@@ -30,7 +31,8 @@ public class RegisteringHandler {
 	public void registerBlocks(RegistryEvent.Register<Block> event) {
 		event.getRegistry().registerAll(
 				BlocksMod.computer_case,
-				BlocksMod.SILICIUM_ORE
+				BlocksMod.SILICIUM_ORE,
+				BlocksMod.SILICIUM_FACTORY
 				);
 	}
 

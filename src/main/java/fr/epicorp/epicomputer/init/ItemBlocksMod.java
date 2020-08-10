@@ -3,6 +3,7 @@ package fr.epicorp.epicomputer.init;
 import fr.epicorp.epicomputer.Epicomputer;
 import fr.epicorp.epicomputer.blocks.BlockSiliciumOre;
 import fr.epicorp.epicomputer.itemblocks.ItemBlockComputerCase;
+import fr.epicorp.epicomputer.itemblocks.ItemBlockSiliciumFactory;
 import fr.epicorp.epicomputer.itemblocks.ItemBlockSiliciumOre;
 import fr.epicorp.epicomputer.items.ItemEpicomputer;
 import net.minecraft.block.material.Material;
@@ -20,6 +21,7 @@ public class ItemBlocksMod {
 	
 	public static final Item computer_case = new ItemBlockComputerCase();
 	public static final Item SILICIUM_ORE = new ItemBlockSiliciumOre();
+	public static final Item SILICIUM_FACTORY = new ItemBlockSiliciumFactory();
 	
 	public static void setItemName(Item item, String name) {
 		item.setRegistryName(Epicomputer.MODID, name).setUnlocalizedName(Epicomputer.MODID + "." + name);
@@ -29,8 +31,9 @@ public class ItemBlocksMod {
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public static void registerItemModels(ModelRegistryEvent event) {
-		registerModel(computer_case, 0);
-		registerModel(SILICIUM_ORE, 0);
+		registerModel(computer_case);
+		registerModel(SILICIUM_ORE);
+		registerModel(SILICIUM_FACTORY);
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -40,5 +43,11 @@ public class ItemBlocksMod {
 	    if (metadata > 0) resourceName += "_m" + String.valueOf(metadata);
 	 
 	    ModelLoader.setCustomModelResourceLocation(item, metadata, new ModelResourceLocation(resourceName, "inventory"));
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public static void registerModel(Item item) {
+	    String resourceName = item.getUnlocalizedName().substring(5).replace('.', ':');
+	    ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(resourceName, "inventory"));
 	}
 }
