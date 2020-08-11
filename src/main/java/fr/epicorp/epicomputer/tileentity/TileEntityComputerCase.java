@@ -19,6 +19,9 @@ public class TileEntityComputerCase extends TileEntityLockable implements ITicka
 	private NonNullList<ItemStack> stacks = NonNullList.withSize(9, ItemStack.EMPTY);
 	private String customName;
 	private String address;
+	
+	public Thread computerThread;
+	
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
@@ -52,8 +55,9 @@ public class TileEntityComputerCase extends TileEntityLockable implements ITicka
 	
 	public void setRandomAddress() {
 		if(!hasAddress()) {
-		String address = UUID.randomUUID().toString();
-	    this.address = address;
+			String address = UUID.randomUUID().toString();
+			assert this.address == address : "§cSame address found !"; 
+			this.address = address;
 		}
 	}
 	 

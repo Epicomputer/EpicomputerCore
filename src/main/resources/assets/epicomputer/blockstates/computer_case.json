@@ -1,11 +1,13 @@
 {
     "variants": {
-    	"normal": [
+        "normal": [
             { "model": "epicomputer:computer_case" }
         ],
-        "facing=north": { "model": "epicomputer:computer_case" },
-        "facing=south": { "model": "epicomputer:computer_case", "y": 180 },
-        "facing=west":  { "model": "epicomputer:computer_case", "y": 270 },
-        "facing=east":  { "model": "epicomputer:computer_case", "y": 90 }
+        "facing=north": [
+            "variant=computer_case": { "model": "epicomputer:computer_case" },
+            "variant=computer_case_boot": { "model": "epicomputer:computer_case_boot" },
+            "variant=computer_case_error": { "model": "epicomputer:computer_case_error" },
+            "variant=computer_case_on": { "model": "epicomputer:computer_case_on" },
+        ]
     }
 }

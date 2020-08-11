@@ -1,8 +1,9 @@
 package fr.epicorp.epicomputer.init;
 
 import fr.epicorp.epicomputer.Epicomputer;
+import fr.epicorp.epicomputer.blocks.BlockComputerCase;
 import fr.epicorp.epicomputer.blocks.BlockSiliciumOre;
-import fr.epicorp.epicomputer.itemblocks.ItemBlockComputerCase;
+import fr.epicorp.epicomputer.itemblocks.ItemBlockMetadata;
 import fr.epicorp.epicomputer.itemblocks.ItemBlockSiliciumFactory;
 import fr.epicorp.epicomputer.itemblocks.ItemBlockSiliciumOre;
 import fr.epicorp.epicomputer.items.ItemEpicomputer;
@@ -19,7 +20,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @EventBusSubscriber(value = Side.CLIENT, modid = Epicomputer.MODID)
 public class ItemBlocksMod {
 	
-	public static final Item computer_case = new ItemBlockComputerCase();
+	public static final Item computer_case = new ItemBlockMetadata(BlocksMod.computer_case, new String[]{"computer_case", "computer_case_m1", "computer_case_m2", "computer_case_m3"} ).setRegistryName(BlocksMod.computer_case.getRegistryName());
 	public static final Item SILICIUM_ORE = new ItemBlockSiliciumOre();
 	public static final Item SILICIUM_FACTORY = new ItemBlockSiliciumFactory();
 	
@@ -31,7 +32,7 @@ public class ItemBlocksMod {
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public static void registerItemModels(ModelRegistryEvent event) {
-		registerModel(computer_case);
+		for (int i = 0; i < BlockComputerCase.EnumType.values().length; i++) registerModel(computer_case, i);
 		registerModel(SILICIUM_ORE);
 		registerModel(SILICIUM_FACTORY);
 	}

@@ -1,20 +1,20 @@
 {
     "computer_case_on": { 
         "category": "block", 
-        "sounds": ["ecore:computer_case_on"], 
-        "subtitle": "ecore.subtitle.testSound",
+        "sounds": ["epicomputer:computer_case_on"], 
+        "subtitle": "epicomputer.subtitle.testSound",
         "stream": true
     },
     "computer_startup": { 
         "category": "block", 
-        "sounds": ["ecore:computer_start"], 
-        "subtitle": "ecore.subtitle.startupSound",
+        "sounds": ["epicomputer:computer_start"], 
+        "subtitle": "epicomputer.subtitle.startupSound",
         "stream": true
     },
     "computer_button": { 
         "category": "block", 
-        "sounds": ["ecore:computer_button"], 
-        "subtitle": "ecore.subtitle.buttonSound",
+        "sounds": ["epicomputer:computer_button"], 
+        "subtitle": "epicomputer.subtitle.buttonSound",
         "stream": true
     }
 }

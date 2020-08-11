@@ -18,16 +18,16 @@ public class ContainerComputerCase extends Container {
 	private TileEntityComputerCase tile;
 	
 	public ContainerComputerCase(TileEntityComputerCase tile, InventoryPlayer playerInventory) {
-	    this.tile = tile;
-	 this.addSlotToContainer(new SlotSingleItem(tile, 0, 113, 50,ItemsMod.BIOS ));
-	 this.addSlotToContainer(new SlotSingleItem(tile, 1, 61, 8,ItemsMod.PROCESSOR ));
-	 this.addSlotToContainer(new SlotSingleItem(tile, 2, 88, 8,ItemsMod.RAM ));
-	 this.addSlotToContainer(new SlotSingleItem(tile, 3, 106, 8,ItemsMod.RAM ));
-	 this.addSlotToContainer(new SlotSingleItem(tile, 4, 61, 39,ItemsMod.GRAPHIC_CARD ));
-	 this.addSlotToContainer(new SlotSingleItem(tile, 5, 79, 39,ItemsMod.GRAPHIC_CARD ));
-	 this.addSlotToContainer(new SlotSingleItem(tile, 6, 143, 7,ItemsMod.HARD_DISK ));
-	 this.addSlotToContainer(new SlotSingleItem(tile, 7, 143, 29,ItemsMod.HARD_DISK ));
-	 this.addSlotToContainer(new SlotSingleItem(tile, 8, 143, 51,ItemsMod.HARD_DISK ));
+		this.tile = tile;
+		this.addSlotToContainer(new SlotSingleItem(tile, 0, 113, 50,ItemsMod.BIOS ));
+		this.addSlotToContainer(new SlotSingleItem(tile, 1, 61, 8,ItemsMod.PROCESSOR ));
+		this.addSlotToContainer(new SlotSingleItem(tile, 2, 88, 8,ItemsMod.RAM ));
+		this.addSlotToContainer(new SlotSingleItem(tile, 3, 106, 8,ItemsMod.RAM ));
+		this.addSlotToContainer(new SlotSingleItem(tile, 4, 61, 39,ItemsMod.GRAPHIC_CARD ));
+		this.addSlotToContainer(new SlotSingleItem(tile, 5, 79, 39,ItemsMod.GRAPHIC_CARD ));
+		this.addSlotToContainer(new SlotSingleItem(tile, 6, 143, 7,ItemsMod.HARD_DISK ));
+		this.addSlotToContainer(new SlotSingleItem(tile, 7, 143, 29,ItemsMod.HARD_DISK ));
+		this.addSlotToContainer(new SlotSingleItem(tile, 8, 143, 51,ItemsMod.HARD_DISK ));
 	 
 	 //this.addSlotToContainer(new SlotOutput(tile, 4, 116, 17));
 	 //inventory

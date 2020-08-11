@@ -3,11 +3,13 @@ package fr.epicorp.epicomputer.client.gui;
 import java.io.IOException;
 
 import fr.epicorp.epicomputer.Epicomputer;
+import fr.epicorp.epicomputer.blocks.BlockComputerCase;
 import fr.epicorp.epicomputer.client.button.GuiButtonPowerComputer;
 import fr.epicorp.epicomputer.container.ContainerComputerCase;
 import fr.epicorp.epicomputer.init.BlocksMod;
 import fr.epicorp.epicomputer.init.ItemsMod;
 import fr.epicorp.epicomputer.tileentity.TileEntityComputerCase;
+import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -28,6 +30,9 @@ public class GuiContenairComputerCase extends GuiContainer{
 	
 	private GuiButtonPowerComputer powerButton;
 	
+	public boolean threadRunning = false;
+	public boolean error = false;
+	
 	//public ArrayList<ComputerErrorType> errorList = new ArrayList();
 	
 	
@@ -47,7 +52,7 @@ public class GuiContenairComputerCase extends GuiContainer{
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
     {
-		String s = this.tile.getAddress();
+		//String s = this.tile.getAddress();
         //this.fontRenderer.drawString("Address : " + this.stack.getTagCompound().getString("address"), this.xSize / 2 - this.fontRenderer.getStringWidth(s) / 2, 6, 0xFFFFFF);
 	}
 	
@@ -72,7 +77,47 @@ public class GuiContenairComputerCase extends GuiContainer{
 			{
 			case 0:
 				
+				if (this.threadRunning) {
+					this.threadRunning = false;
+				}
 				
+				if (this.error) {
+					this.error = false;
+				}
+				
+				tile.computerThread = new Thread(new Runnable() {
+					
+					@Override
+					public void run() {
+					
+						if (tile.getBlockType() instanceof BlockComputerCase) {
+							
+							BlockComputerCase computer = (BlockComputerCase) tile.getBlockType();
+							
+							tile.getWorld().setBlockState(tile.getPos(), computer.getStateFromMeta(BlockComputerCase.EnumType.COMPUTER_BOOT.getMetadata()));
+							
+							try {
+								tile.computerThread.sleep(1500);
+							} catch (InterruptedException e) {
+								error(computer, true, tile.getAddress());
+							}
+							
+							tile.getWorld().setBlockState(tile.getPos(), computer.getStateFromMeta(BlockComputerCase.EnumType.COMPUTER_ON.getMetadata()));
+							
+							while (threadRunning) {
+								
+								error(computer, true, tile.getAddress());
+								
+							}
+							
+							tile.computerThread.stop();
+						}
+						
+					}
+					
+				}, "ComputerThread-" + tile.getAddress());
+				
+				tile.computerThread.run();
 				
 				break;
 				
@@ -85,33 +130,46 @@ public class GuiContenairComputerCase extends GuiContainer{
 		super.actionPerformed(button);
 	}
 	
-	public static void onEveryday() {
-		//ComputerCase.setState(ComputerState.ON, tile.getWorld(), tile.getPos());
-		new Thread("start") {
+	public void error(BlockComputerCase computer, boolean error, String uuid) {
+		
+		this.threadRunning = false;
+		this.error = error;
+		
+		while(this.error) {
 			
-			@Override
-			public void run() {
+			Thread thread = null;
+			
+			thread = new Thread(new Runnable() {
 				
-				try {
-					if (start == true) {
-					this.sleep(1L);
+				@Override
+				public void run() {
+
+					tile.getWorld().setBlockState(tile.getPos(), computer.getStateFromMeta(BlockComputerCase.EnumType.COMPUTER_OFF.getMetadata()));
 					
-					//BlockComputerCase.setState(ComputerState.ON, tile.getWorld(), tile.getPos());
-					//TileEntityComputerCase.setNBT(tile.getWorld(), tile.getPos());
-					this.start();
-					}else if (start = false){
-						antiSpamSound = false;
-						start = false;
-						this.stop();
+					try {
+						thread.sleep(750);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					
+					tile.getWorld().setBlockState(tile.getPos(), computer.getStateFromMeta(BlockComputerCase.EnumType.COMPUTER_ERROR.getMetadata()));
+
+					try {
+						thread.sleep(750);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
 				}
-				
-			}
+			}, "ErrorThread-" + uuid);
+		
+			thread.interrupt();
 			
-		}.start();
+		}
+		
+		
 	}
 	
 	public boolean doesGuiPauseGame(){

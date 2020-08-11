@@ -1,5 +1,4 @@
 itemGroup.tabEpicomputer=Epicomputer
-tile.silicium_factory.name=Silicium Factory
 
 item.epicomputer.bios.name=Bios
 item.epicomputer.ram.name=Ram
@@ -9,6 +8,5 @@ item.epicomputer.hard_disk.name=Hard Disk
 item.epicomputer.tablet_of_help.name=Tablet Of Help
 item.epicomputer.silicium_plate.name=Silicium Plate
 
-tile.epicomputer.computer_case.name=Computer Case
+epicomputer.computer_case.name=Computer Case
 tile.epicomputer.silicium_ore.name=Silicium Ore
-tile.epicomputer.silicium_factory.name=Silicium Factory
