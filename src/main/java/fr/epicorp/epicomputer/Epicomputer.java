@@ -10,9 +10,9 @@ import fr.epicorp.epicomputer.init.RecipesMod;
 import fr.epicorp.epicomputer.proxy.ClientProxy;
 import fr.epicorp.epicomputer.proxy.CommonProxy;
 import fr.epicorp.epicomputer.tileentity.TileEntityComputerCase;
+import fr.epicorp.epicomputer.tileentity.TileEntitySiliciumFactory;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -63,6 +63,7 @@ public class Epicomputer {
 		proxy.preInit(event.getSuggestedConfigurationFile());
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
         GameRegistry.registerTileEntity(TileEntityComputerCase.class, Epicomputer.MODID +":tile_computer_case");
+        GameRegistry.registerTileEntity(TileEntitySiliciumFactory.class, Epicomputer.MODID +":tile_silicium_factory");
         GameRegistry.registerWorldGenerator(worldgeneration, 0); 
 	}
 	

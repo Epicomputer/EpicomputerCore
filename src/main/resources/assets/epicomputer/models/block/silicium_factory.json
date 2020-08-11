@@ -1,6 +1,7 @@
 {
     "parent": "block/orientable",
     "textures": {
+        "all": "epicomputer:blocks/text1",
         "text1": "epicomputer:blocks/text1",
         "text2": "epicomputer:blocks/text2"
     },

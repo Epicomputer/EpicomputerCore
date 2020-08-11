@@ -20,6 +20,7 @@ public class ItemsMod {
 	public static final Item GRAPHIC_CARD = new ItemEpicomputer("graphic_card");
 	public static final Item HARD_DISK = new ItemEpicomputer("hard_disk");
 	public static final Item SILICIUM_PLATE = new ItemEpicomputer("silicium_plate");
+	public static final Item SILICIUM = new ItemEpicomputer("silicium");
 
 	public static void setItemName(Item item, String name) {
 		item.setRegistryName(Epicomputer.MODID, name).setUnlocalizedName(Epicomputer.MODID + "." + name);
@@ -35,6 +36,7 @@ public class ItemsMod {
 		registerModel(GRAPHIC_CARD, 0);
 		registerModel(HARD_DISK, 0);
 		registerModel(SILICIUM_PLATE, 0);
+		registerModel(SILICIUM, 0);
 	}
 
 	@SideOnly(Side.CLIENT)

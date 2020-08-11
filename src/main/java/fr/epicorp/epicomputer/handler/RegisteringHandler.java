@@ -17,7 +17,8 @@ public class RegisteringHandler {
 				ItemsMod.RAM, 
 				ItemsMod.GRAPHIC_CARD,
 				ItemsMod.HARD_DISK,
-				ItemsMod.SILICIUM_PLATE
+				ItemsMod.SILICIUM_PLATE,
+				ItemsMod.SILICIUM
 				);
 		/******************** ITEMBLOCKS ********************/
 		event.getRegistry().registerAll(

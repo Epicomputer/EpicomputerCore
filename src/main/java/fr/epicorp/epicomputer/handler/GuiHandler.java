@@ -1,8 +1,11 @@
 package fr.epicorp.epicomputer.handler;
 
+import fr.epicorp.epicomputer.client.GuiContenairSiliciumFactory;
 import fr.epicorp.epicomputer.client.gui.GuiContenairComputerCase;
 import fr.epicorp.epicomputer.container.ContainerComputerCase;
+import fr.epicorp.epicomputer.container.ContainerSiliciumFactory;
 import fr.epicorp.epicomputer.tileentity.TileEntityComputerCase;
+import fr.epicorp.epicomputer.tileentity.TileEntitySiliciumFactory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -16,6 +19,8 @@ public class GuiHandler implements IGuiHandler {
         TileEntity te = world.getTileEntity(new BlockPos(x, y, z));
         if(te instanceof TileEntityComputerCase) {
             return new ContainerComputerCase((TileEntityComputerCase)te, player.inventory);
+        }else if(te instanceof TileEntitySiliciumFactory) {
+            return new ContainerSiliciumFactory((TileEntitySiliciumFactory)te, player.inventory);
         }
         return null;
     }
@@ -25,6 +30,8 @@ public class GuiHandler implements IGuiHandler {
         TileEntity te = world.getTileEntity(new BlockPos(x, y, z));
         if(te instanceof TileEntityComputerCase) {
             return new GuiContenairComputerCase((TileEntityComputerCase)te, player.inventory);
+        }else if(te instanceof TileEntitySiliciumFactory) {
+            return new GuiContenairSiliciumFactory((TileEntitySiliciumFactory)te, player.inventory);
         }
         return null;
     }
